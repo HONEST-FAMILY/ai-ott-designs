@@ -65,49 +65,13 @@
 
   /* HOME */
   if ($('#stage')) {
-    var stage = $('#stage'), cloud = $('#cloud'), q = $('#q');
-    var spots = innerWidth <= 760
-      ? [[-38, -30, .7], [36, -34, .75], [-40, 6, .6], [40, 10, .65], [-30, 36, .7], [32, 38, .6], [0, -40, .55], [-6, 44, .5]]
-      : [[-40, -30, 1], [-26, -40, .7], [-44, 4, .85], [-30, 26, .75], [-42, 40, .6], [-16, 42, .55], [40, -32, .95], [26, -42, .65], [44, 0, .8], [30, 22, .9], [42, 40, .6], [16, 44, .55], [-12, -44, .5], [12, -38, .6], [-22, -14, .45], [24, -10, .45]];
-    var pool = [];
-    K.works.forEach(function (w) { w.scenes.slice(0, 2).forEach(function (s) { pool.push({ w: w, s: s }); }); });
-    cloud.innerHTML = spots.map(function (p, i) {
-      var x = pool[(i * 5) % pool.length];
-      return '<div class="st" data-w="' + x.w.id + '" style="--x:' + p[0] + ';--y:' + p[1] + ';--z:' + p[2] + ';--r:' + ((i * 37) % 13 - 6) + 'deg"><div class="st-in" style="animation-duration:' + (7 + (i % 5) * 1.3).toFixed(1) + 's;animation-delay:-' + (i * 0.9).toFixed(1) + 's"><img src="' + x.s.img + '" alt=""></div></div>';
-    }).join('');
+    var stage = $('#stage'), orb = $('#orb'), q = $('#q');
     if (fine) document.addEventListener('mousemove', function (e) {
-      cloud.style.setProperty('--mx', (e.clientX / innerWidth - .5).toFixed(3)); cloud.style.setProperty('--my', (e.clientY / innerHeight - .5).toFixed(3));
+      var x = (e.clientX / innerWidth - .5) * 24, y = (e.clientY / innerHeight - .5) * 24;
+      orb.style.setProperty('--mx', x.toFixed(1) + 'px'); orb.style.setProperty('--my', y.toFixed(1) + 'px');
     });
-    var pulse = function () {
-      var c0 = q.value.trim() ? parse(q.value) : [];
-      var txt = q.value.trim().toLowerCase();
-      cloud.classList.toggle('lit', !!(c0.length || txt));
-      $$('.st', cloud).forEach(function (st) {
-        var w = K.work(st.dataset.w);
-        var hit = c0.length ? c0.some(function (x) { return hitOf(w, x); }) : !!txt && (w.title + ' ' + w.tags.join(' ') + ' ' + w.tools.join(' ')).toLowerCase().indexOf(txt) >= 0;
-        st.classList.toggle('hit', hit);
-      });
-    };
+    var pulse = function () { orb.style.setProperty('--pulse', '1.07'); clearTimeout(pulse.t); pulse.t = setTimeout(function () { orb.style.setProperty('--pulse', '1'); }, 160); };
     q.addEventListener('input', pulse);
-    var fly = function (ranked) {
-      if (reduce) return;
-      $$('#picks .pick').forEach(function (p, i) {
-        var r = ranked[i], from = r && $('.st[data-w="' + r.w.id + '"] img', cloud);
-        var to = $('.pick-pic', p);
-        if (!from || !to) return;
-        p.classList.add('flying');
-        var a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
-        var cl = document.createElement('img'); cl.className = 'fly'; cl.src = r.w.wide;
-        cl.style.left = (a.left + scrollX) + 'px'; cl.style.top = (a.top + scrollY) + 'px'; cl.style.width = a.width + 'px'; cl.style.height = a.height + 'px';
-        document.body.appendChild(cl);
-        void cl.offsetWidth;
-        setTimeout(function () {
-          cl.style.transition = 'left .85s cubic-bezier(.65,0,.2,1), top .85s cubic-bezier(.65,0,.2,1), width .85s cubic-bezier(.65,0,.2,1), height .85s cubic-bezier(.65,0,.2,1), border-radius .85s';
-          cl.style.left = (b.left + scrollX) + 'px'; cl.style.top = (b.top + scrollY) + 'px'; cl.style.width = b.width + 'px'; cl.style.height = b.height + 'px'; cl.style.borderRadius = '20px 20px 0 0';
-        }, i * 120);
-        setTimeout(function () { p.classList.remove('flying'); p.classList.add('in'); setTimeout(function () { cl.remove(); }, 260); }, 900 + i * 120);
-      });
-    };
     var examples = ['잠들기 전에 볼 잔잔한 애니메이션', '실사 같은 SF 단편', '5분 안에 끝나는 웃긴 거', 'Runway로 만든 작품', '아이랑 같이 볼 판타지'];
     var ei = 0, ci = 0, del = false;
     (function tick() {
@@ -170,7 +134,6 @@
           '<div class="pick-b"><div class="pick-t">' + esc(w.title) + '<small>' + esc(w.en) + '</small></div><div class="why">' + why.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</div>' +
           '<p>' + esc(w.logline) + '</p><a class="btn w" href="work.html?id=' + w.id + '">' + I.play + '바로 보기</a></div></div>';
       }).join('');
-      fly(ranked);
       $$('#picks .pick').forEach(function (p, i) {
         setTimeout(function () { p.classList.add('in'); }, 200 + i * 160);
         var v = $('video', p);
@@ -358,9 +321,30 @@
 
     $('#wT').textContent = w.title; $('#wEn').textContent = w.en; $('#wLog').textContent = w.logline;
     $('#wMeta').innerHTML = '<span><b>' + esc(c.name) + '</b></span><span>' + esc(w.genre) + '</span><span>' + esc(w.runtime) + '</span><span>' + esc(w.rating) + '</span><span>' + esc(w.look) + '</span><span>' + esc(w.method) + '</span>';
-    $('#wAct').innerHTML = '<button class="btn w" type="button" id="playTop">' + I.play + '처음부터 보기</button><button class="btn g" type="button" id="fav">' + I.plus + '관심 작품</button><button class="btn g" type="button">' + I.share + '공유</button>';
+    var ep1 = K.epsOpen(w)[0];
+    $('#wAct').innerHTML = '<button class="btn w" type="button" id="playTop">' + I.play + (ep1 ? ep1.label + '부터 보기' : '처음부터 보기') + '</button><button class="btn g" type="button" id="fav">' + I.plus + '관심 작품</button><button class="btn g" type="button">' + I.share + '공유</button>';
     $('#playTop').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); start(0); });
     $('#fav').addEventListener('click', function () { this.classList.toggle('on'); this.innerHTML = this.classList.contains('on') ? I.check + '관심 작품' : I.plus + '관심 작품'; });
+    var epTag = document.createElement('div'); epTag.className = 'wp-ep'; wp.appendChild(epTag);
+    var showEp = function (e) { epTag.textContent = e ? e.label + ' · ' + e.title : ''; epTag.classList.toggle('show', !!e); };
+    if (ep1) showEp(ep1);
+    if (w.series) {
+      var we = $('#wEps'); we.hidden = false;
+      we.innerHTML = '<div class="we-h">회차<span>' + w.series.length + '</span></div>' + w.series.map(function (e) {
+        return '<button type="button" class="wep glass' + (e.soon ? ' soon' : '') + (ep1 && e.no === ep1.no ? ' on' : '') + '" data-ep="' + e.no + '"><span class="wep-pic"><img src="' + e.img + '" alt="" loading="lazy">' + (e.soon ? '' : '<i>' + I.play + '</i>') + '</span>' +
+          '<span class="wep-b"><b>' + esc(e.label) + ' · ' + esc(e.title) + '</b><span>' + (e.soon ? esc(e.soon) : esc(e.len) + ' · ' + esc(e.desc || '')) + '</span></span></button>';
+      }).join('');
+      $$('.wep', we).forEach(function (bt) {
+        bt.addEventListener('click', function () {
+          var e = w.series.filter(function (x) { return x.no === +bt.dataset.ep; })[0];
+          if (e.soon) return;
+          $$('.wep', we).forEach(function (x) { x.classList.toggle('on', x === bt); });
+          showEp(e);
+          window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+          start(0);
+        });
+      });
+    }
 
     var msgs = $('#msgs');
     var bot = function (html, extra) {

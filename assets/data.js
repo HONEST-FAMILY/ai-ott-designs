@@ -107,9 +107,10 @@ window.KV = (function () {
       ],
       tools: ['Midjourney', 'Runway', 'ElevenLabs', 'Udio'], review: '운영 검수 완료 · 캐릭터 저작권 확인',
       free: true, series: [
-        { no: 1, title: '캠핑장 도착', len: '3:40' },
-        { no: 2, title: '버섯이 움직였다', len: '3:20' },
-        { no: 3, title: '달이 뜨면', len: '3:30' }
+        { no: 1, title: '캠핑장 도착', len: '3:40', img: M + 'scene/sprite_1.jpg', desc: '캠핑장에 도착한 다섯 친구. 숲 한가운데 유난히 버섯이 많습니다.' },
+        { no: 2, title: '버섯이 움직였다', len: '3:20', img: M + 'scene/sprite_2.jpg', desc: '밤새 버섯이 자리를 옮겼다는 걸 알아챈 친구들. 누가 장난을 치는 걸까요?' },
+        { no: 3, title: '달이 뜨면', len: '3:30', img: M + 'scene/sprite_3.jpg', desc: '보름달이 뜨자 숲속 버섯들이 일제히 고개를 듭니다.' },
+        { no: 4, title: '버섯 숲의 왕', len: '3:40', img: M + 'scene/sprite_4.jpg', soon: '10월 25일 일요일 공개', desc: '숲의 가장 깊은 곳, 다섯 친구는 버섯들이 모시는 왕을 만납니다.' }
       ],
       poster: M + 'poster/sprite.jpg', wide: M + 'wide/sprite.jpg', prev: M + 'prev/sprite.mp4',
       scenes: [
@@ -145,7 +146,7 @@ window.KV = (function () {
     {
       id: 'hero', title: '붉은 비행사', en: 'The Red Pilot', creator: 'reddot', year: 2026,
       genre: '액션 어드벤처 · 2D', tags: ['액션', '어드벤처', '2D', '박진감'], look: '2D 셀 애니메이션', lookKey: 'flat',
-      runtime: '3분 57초', mins: 4, rating: '12세 이상', method: 'AI + 사람 공동 제작', methodKey: 'mix',
+      runtime: '시즌 1 · 3화', mins: 4, rating: '12세 이상', method: 'AI + 사람 공동 제작', methodKey: 'mix',
       logline: '하늘 도시의 심장이 멈추던 날, 붉은 비행기 한 대가 폭풍 속으로 뛰어듭니다.',
       memo: '콘티와 주요 원화는 사람이, 비행 장면의 움직임은 AI가 맡았습니다.',
       stages: [
@@ -157,7 +158,11 @@ window.KV = (function () {
         { k: '편집', who: '사람' }
       ],
       tools: ['Midjourney', 'Kling', 'Suno'], review: '운영 검수 완료',
-      free: false, series: null,
+      free: false, series: [
+        { no: 1, title: '멈춘 심장', len: '3:57', img: M + 'scene/hero_1.jpg', desc: '하늘 도시의 심장이 멈춘 날, 정비공 소녀가 붉은 비행기의 시동을 겁니다.' },
+        { no: 2, title: '폭풍 속으로', len: '4:10', img: M + 'scene/hero_2.jpg', desc: '도시를 덮친 폭풍. 붉은 비행기가 번개 사이를 가르며 날아오릅니다.' },
+        { no: 3, title: '되살아난 숲', len: '4:20', img: M + 'scene/hero_3.jpg', desc: '되살린 심장의 빛이 도시 아래 숲까지 번져 나갑니다.' }
+      ],
       poster: M + 'poster/hero.jpg', wide: M + 'wide/hero.jpg', prev: M + 'prev/hero.mp4',
       scenes: [
         { t: '00:19', s: 19, title: '빛을 쥔 손', img: M + 'scene/hero_1.jpg', how: '원화 Midjourney · 빛은 사람이 합성' },
@@ -168,7 +173,7 @@ window.KV = (function () {
     {
       id: 'wingit', title: '고물 로켓 대작전', en: 'Junk Rocket', creator: 'mallang', year: 2026,
       genre: '가족 코미디 애니메이션', tags: ['코미디', '가족', '애니메이션', '유쾌한', '짧은'], look: '3D 카툰', lookKey: 'toon',
-      runtime: '3분 58초', mins: 4, rating: '전체관람가', method: 'AI 생성 중심', methodKey: 'ai',
+      runtime: '시즌 1 · 4화', mins: 4, rating: '전체관람가', method: 'AI 생성 중심', methodKey: 'ai',
       logline: '헛간의 고물로 로켓을 만든 고양이와 강아지. 정말로 날아오를 수 있을까요?',
       memo: '캐릭터 두 마리가 장면마다 같아 보이도록 캐릭터 시트를 먼저 만들고 영상을 뽑았습니다.',
       stages: [
@@ -180,7 +185,12 @@ window.KV = (function () {
         { k: '편집', who: '사람' }
       ],
       tools: ['Midjourney', 'Sora', 'ElevenLabs', 'Suno'], review: '운영 검수 완료',
-      free: true, series: null,
+      free: true, series: [
+        { no: 1, title: '헛간의 설계도', len: '3:58', img: M + 'scene/wingit_1.jpg', desc: '고양이와 강아지가 헛간 구석에서 오래된 로켓 설계도를 찾아냅니다.' },
+        { no: 2, title: '고물 모으기', len: '4:05', img: M + 'scene/wingit_2.jpg', desc: '동네 고물을 모으러 나선 둘. 쓸 만한 건 고장 난 냉장고 하나뿐입니다.' },
+        { no: 3, title: '첫 점화', len: '3:50', img: M + 'wide/wingit.jpg', desc: '드디어 첫 점화. 로켓은 그대로이고 헛간 지붕만 날아갑니다.' },
+        { no: 4, title: '구름 위로', len: '4:12', img: M + 'scene/wingit_3.jpg', desc: '마지막 시도. 고양이가 조종석에 앉고, 강아지가 카운트다운을 셉니다.' }
+      ],
       poster: M + 'poster/wingit.jpg', wide: M + 'wide/wingit.jpg', prev: M + 'prev/wingit.mp4',
       scenes: [
         { t: '00:14', s: 14, title: '조종석의 고양이', img: M + 'scene/wingit_1.jpg', how: '캐릭터 시트 Midjourney → 영상 Sora' },
@@ -213,7 +223,7 @@ window.KV = (function () {
     {
       id: 'sintel', title: '용을 찾아서', en: 'Finding the Dragon', creator: 'offset', year: 2026,
       genre: '판타지 어드벤처', tags: ['판타지', '어드벤처', '애틋한', '애니메이션'], look: '3D 시네마틱', lookKey: 'paint',
-      runtime: '14분 48초', mins: 15, rating: '12세 이상', method: 'AI + 사람 공동 제작', methodKey: 'mix',
+      runtime: '2부작', mins: 15, rating: '12세 이상', method: 'AI + 사람 공동 제작', methodKey: 'mix',
       logline: '잃어버린 아기 용을 찾아, 눈 덮인 산과 사막을 건너는 소녀의 긴 여정.',
       memo: '가장 긴 작품이라 장면 수가 많습니다. 풍경은 AI, 인물 연기는 사람이 다듬었습니다.',
       stages: [
@@ -225,7 +235,10 @@ window.KV = (function () {
         { k: '음악', who: '사람' }
       ],
       tools: ['Midjourney', 'Runway', 'ElevenLabs'], review: '운영 검수 완료',
-      free: false, series: null,
+      free: false, unit: '부', series: [
+        { no: 1, title: '잃어버린 아기 용', len: '14:48', img: M + 'scene/sintel_1.jpg', desc: '눈 덮인 산에서 다친 아기 용을 만난 소녀. 함께 지낸 날은 길지 않았습니다.' },
+        { no: 2, title: '용의 둥지', len: '15:10', img: M + 'scene/sintel_3.jpg', soon: '11월 14일 금요일 공개', desc: '아기 용이 사라진 뒤, 소녀는 사막 너머 용의 둥지를 찾아 떠납니다.' }
+      ],
       poster: M + 'poster/sintel.jpg', wide: M + 'wide/sintel.jpg', prev: M + 'prev/sintel.mp4',
       scenes: [
         { t: '05:03', s: 303, title: '노을 속 용', img: M + 'scene/sintel_1.jpg', how: '하늘 Runway · 용 실루엣 합성' },
@@ -266,7 +279,9 @@ window.KV = (function () {
     'ElevenLabs': '목소리', 'Suno': '음악', 'Udio': '음악', 'Topaz': '보정'
   };
 
+  works.forEach(function (w) { (w.series || []).forEach(function (e) { e.label = e.no + (w.unit || '화'); }); });
   function work(id) { for (var i = 0; i < works.length; i++) if (works[i].id === id) return works[i]; return null; }
+  function epsOpen(w) { return (w.series || []).filter(function (e) { return !e.soon; }); }
   function creatorOf(w) { return creators[w.creator]; }
   function aiShare(w) {
     var ai = 0, n = 0;
@@ -275,5 +290,5 @@ window.KV = (function () {
   }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  return { creators: creators, works: works, shorts: shorts, toolInfo: toolInfo, work: work, creatorOf: creatorOf, aiShare: aiShare, esc: esc, M: M };
+  return { creators: creators, works: works, shorts: shorts, toolInfo: toolInfo, work: work, epsOpen: epsOpen, creatorOf: creatorOf, aiShare: aiShare, esc: esc, M: M };
 })();

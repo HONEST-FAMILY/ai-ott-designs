@@ -18,7 +18,6 @@
     <a class="on" href="index.html">큐레이터</a>
     <a href="#dial">취향으로 찾기</a>
     <a href="#map">제작정보 지도</a>
-    <a href="shorts.html">쇼츠</a>
   </nav>
   <div class="nav-r">
     <a class="login" href="#">로그인</a>
@@ -27,7 +26,7 @@
 </header>
 
 <section class="stage" id="stage">
-  <div class="cloud" id="cloud" aria-hidden="true"></div>
+  <div class="orb-wrap"><div class="orb" id="orb"><i></i></div></div>
   <h1 class="greet" id="greet">오늘은 어떤 이야기가<br><span>보고 싶으세요?</span></h1>
   <form class="ask glass" id="ask" role="search">
     <input id="q" type="text" autocomplete="off" aria-label="보고 싶은 작품을 말해 주세요">
@@ -88,35 +87,19 @@
   </div>
 </section>
 
-<section class="cta glass" aria-label="창작자 등록">
-  <div>
-    <span class="mono">창작자</span>
-    <h2>체크 몇 번으로<br>작품의 제작정보를 남기세요</h2>
-    <p>공정마다 사람·AI·함께 중 하나만 고르면, 큐레이터가 그 정보로 작품을 알맞은 시청자에게 소개합니다.</p>
-    <a class="btn w" href="../studio/index.html">창작자로 작품 올리기</a>
-  </div>
-  <div class="form-mock" aria-hidden="true">
-    <div class="fm-row"><span>원화</span><div class="seg"><b>사람</b><b class="on">AI</b><b>함께</b></div></div>
-    <div class="fm-row"><span>영상</span><div class="seg"><b>사람</b><b class="on">AI</b><b>함께</b></div></div>
-    <div class="fm-row"><span>목소리</span><div class="seg"><b>사람</b><b>AI</b><b class="on">함께</b></div></div>
-    <div class="fm-row"><span>음악</span><div class="seg"><b class="on">사람</b><b>AI</b><b>함께</b></div></div>
-  </div>
-</section>
-
 <footer class="foot">
   <div><a class="logo" href="index.html"><i></i>kivelo</a><div style="margin-top:8px">취향을 묻고, 어울리는 AI 작품을 골라 드리는 곳</div></div>
-  <nav><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="#">창작자 센터</a><a href="#">고객센터</a></nav>
+  <nav><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="#">고객센터</a></nav>
   <p class="note">시안용 화면입니다. 큐레이터의 답은 작품에 붙은 분위기·길이·제작정보 태그로 고른 예시이며, 작품 제목·창작자·제작정보·숫자는 화면 구성을 보여주기 위한 가상의 예시입니다. 영상과 이미지는 Blender Foundation의 오픈 무비(CC BY 3.0·4.0) 장면을 잘라 썼습니다 — Spring, Charge, Singularity, Sprite Fright, Coffee Run, Hero, Wing It!, Glass Half, Sintel · © Blender Foundation | studio.blender.org</p>
 </footer>
 
 <nav class="tabbar" aria-label="하단 메뉴">
   <a class="on" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>큐레이터</a>
   <a href="#dial"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>취향</a>
-  <a href="shorts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="3" width="10" height="18" rx="3"/><path d="m11 10 3 2-3 2z" fill="currentColor"/></svg>쇼츠</a>
+  <a href="#map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="7" r="2.5"/><circle cx="18" cy="17" r="2.5"/><path d="M8.5 7h3a3 3 0 0 1 3 3v4a3 3 0 0 0 3 3"/></svg>도구</a>
   <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v17l-6-4-6 4z"/></svg>보관함</a>
 </nav>
 <script src="../assets/data.js"></script>
 <script src="c.js"></script>
-<script src="../assets/switcher.js"></script>
 </body>
 </html>

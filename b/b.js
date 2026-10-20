@@ -55,7 +55,7 @@
       '<h1 class="k hero-t">' + esc(w0.title) + '</h1><div class="d hero-en">' + esc(w0.en) + '</div>' +
       '<div class="hero-cr"><span>감독 <b>' + esc(c0.name) + '</b></span><span>' + esc(w0.genre) + '</span><span>' + esc(w0.runtime) + '</span><span>' + esc(w0.rating) + '</span><span>패스 전용</span></div>' +
       '<p class="hero-log">' + esc(w0.logline) + '</p>' +
-      '<div class="hero-btns"><a class="btn y" href="work.html?id=charge&play=1">' + I.play + '상영 시작</a><a class="btn o" href="shorts.html#sh02">예고편</a><button class="btn o" type="button" id="want">' + I.plus + '보고 싶어요</button></div>' +
+      '<div class="hero-btns"><a class="btn y" href="work.html?id=charge&play=1">' + I.play + '상영 시작</a><button class="btn o" type="button" id="want">' + I.plus + '보고 싶어요</button></div>' +
       '<div class="ai-credit"><span class="d">AI credits</span>' + aiCredit(w0, 3) + '</div>';
     fav($('#want'), I.check + '보고 싶어요', I.plus + '보고 싶어요');
     $('#heroSide').innerHTML = '<h4>Coming up</h4>' + [
@@ -101,7 +101,7 @@
     $('#more').innerHTML = [['wingit', ''], ['glass', ''], ['coffee', '수요일 개봉'], ['hero', '금요일 개봉']].map(function (x) {
       var w = K.work(x[0]);
       return '<a class="pp" href="work.html?id=' + w.id + '"><div class="pic"><img src="' + w.poster + '" alt="" loading="lazy"></div><b>' + esc(w.title) + '</b><span>' + (x[1] ? '<em style="font-style:normal;color:var(--y);font-weight:800">' + x[1] + '</em> · ' : '') + esc(w.genre) + '</span></a>';
-    }).join('') + '<a class="pp" href="../studio/index.html"><div class="pic" style="display:grid;place-items:center;background:#111;box-shadow:inset 0 0 0 1px var(--line2)"><span class="d" style="font-size:44px;text-align:center;color:var(--y)">Your<br>film<br>here</span></div><b>상영 신청</b><span>당신의 작품을 이 자리에</span></a>';
+    }).join('');
 
     $('#hallGrid').innerHTML = [
       { n: '01', name: 'SF관', id: 'charge', count: 2 }, { n: '02', name: '판타지관', id: 'spring', count: 2 },
@@ -114,7 +114,7 @@
 
     $('#trail').innerHTML = K.shorts.map(function (s) {
       var w = K.work(s.work);
-      return '<a class="tr" href="shorts.html#' + s.id + '"><div class="tr-pic"><img src="' + s.poster + '" alt="" loading="lazy"><video muted playsinline loop preload="none" data-src="' + s.src + '"></video><div class="tr-t">' + esc(s.title) + '</div><div class="tr-b">본편 ' + esc(w.title) + ' · ' + esc(w.runtime) + '</div></div></a>';
+      return '<a class="tr" href="work.html?id=' + w.id + '"><div class="tr-pic"><img src="' + s.poster + '" alt="" loading="lazy"><video muted playsinline loop preload="none" data-src="' + s.src + '"></video><div class="tr-t">' + esc(s.title) + '</div><div class="tr-b">본편 ' + esc(w.title) + ' · ' + esc(w.runtime) + '</div></div></a>';
     }).join('');
     hoverPlay('#trail .tr'); viewPlay('#trail .tr', .85);
 
@@ -133,9 +133,8 @@
     $('#bkBg').src = w.wide; $('#bkPoster').src = w.poster;
     $('#bkNow').innerHTML = '<i></i>NOW SHOWING · ' + (w.free ? '무료 상영' : '패스 전용');
     $('#bkT').textContent = w.title; $('#bkEn').textContent = w.en; $('#bkLog').textContent = w.logline;
-    var tr = K.shorts.filter(function (s) { return s.work === w.id; })[0];
-    $('#bkBtns').innerHTML = '<button class="btn y" type="button" id="playBtn">' + I.play + (w.series ? '1화 상영 시작' : '상영 시작') + '</button>' +
-      (tr ? '<a class="btn o" href="shorts.html#' + tr.id + '">예고편</a>' : '') +
+    var ep1 = K.epsOpen(w)[0];
+    $('#bkBtns').innerHTML = '<button class="btn y" type="button" id="playBtn">' + I.play + (ep1 ? ep1.label + ' 상영 시작' : '상영 시작') + '</button>' +
       '<button class="btn o" type="button" id="want">' + I.plus + '보고 싶어요</button><button class="btn o" type="button">' + I.share + '공유</button>';
     fav($('#want'), I.check + '보고 싶어요', I.plus + '보고 싶어요');
     $('#facts').innerHTML = [['러닝타임', w.runtime], ['관람 등급', w.rating], ['장르', w.genre], ['화질', '1080p · 자막 한/영'], ['관람', w.free ? '무료 · 상영 전 광고' : '키벨로 패스']]
@@ -167,15 +166,35 @@
     if (!mon) tv.loop = true;
     var parts = mon ? mon.parts : [{ at: 0, scene: 0 }];
     var fmt = function (s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); };
-    var open = function (seek) {
+    var cntT = 0;
+    var open = function (seek, e) {
+      clearInterval(cntT);
+      e = e || ep1;
+      $('#thTitle').textContent = w.title + (e ? ' · ' + e.label + ' ' + e.title : '');
       th.classList.add('on'); document.body.style.overflow = 'hidden'; document.body.classList.add('theater-on');
       var cnt = $('#thCount'); var n = 3;
-      var go = function () { cnt.classList.add('off'); th.classList.add('playing'); if (seek != null) tv.currentTime = seek; playV(tv); };
+      var go = function () { cnt.classList.add('off'); th.classList.add('playing'); tv.currentTime = seek != null ? seek : 0; playV(tv); };
       if (reduce || seek != null) { go(); return; }
+      th.classList.remove('playing'); tv.pause();
       cnt.classList.remove('off'); cnt.textContent = n;
-      var t = setInterval(function () { n--; if (n > 0) cnt.textContent = n; else { clearInterval(t); go(); } }, 700);
+      cntT = setInterval(function () { n--; if (n > 0) cnt.textContent = n; else { clearInterval(cntT); go(); } }, 700);
     };
-    var close = function () { th.classList.remove('on', 'playing'); tv.pause(); document.body.style.overflow = ''; document.body.classList.remove('theater-on'); };
+    var close = function () { clearInterval(cntT); th.classList.remove('on', 'playing'); tv.pause(); document.body.style.overflow = ''; document.body.classList.remove('theater-on'); };
+    if (w.series) {
+      $('#eps').hidden = false;
+      $('#epList').innerHTML = w.series.map(function (e) {
+        return '<button class="ep' + (e.soon ? ' soon' : '') + '" type="button" data-ep="' + e.no + '"><div class="pic"><img src="' + e.img + '" alt="" loading="lazy">' +
+          (e.soon ? '<span class="ep-tag">' + esc(e.soon) + '</span>' : '<span class="ep-go">' + I.play + '</span>') + '</div>' +
+          '<div class="ep-b"><span class="d">' + esc(e.label) + '</span><b>' + esc(e.title) + '</b><span class="ep-len">' + esc(e.len) + '</span><p>' + esc(e.desc || '') + '</p></div></button>';
+      }).join('');
+      $$('#epList .ep').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var e = w.series.filter(function (x) { return x.no === +b.dataset.ep; })[0];
+          if (e.soon) { b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); return; }
+          open(null, e);
+        });
+      });
+    }
     $('#playBtn').addEventListener('click', function () { open(null); });
     $('#thClose').addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });

@@ -31,7 +31,6 @@
 
   var ORIG = { spring: 1, charge: 1, singularity: 1, sintel: 1, sprite: 1 };
   var MOODS = ['잔잔한', '경이로운', '긴장감', '쓸쓸한', '몽환적', '유쾌한', '오싹한', '경쾌한', '뭉클한', '박진감', '엉뚱한', '애틋한'];
-  var EPDESC = { 1: '캠핑장에 도착한 다섯 친구. 숲 한가운데 유난히 버섯이 많습니다.', 2: '밤새 버섯이 자리를 옮겼다는 걸 알아챈 친구들. 누가 장난을 치는 걸까요?', 3: '보름달이 뜨자 숲속 버섯들이 일제히 고개를 듭니다.' };
   var CONT = [
     { id: 'charge', sc: 4, f: 40, s: '02:43에서 멈춤 · 1분 40초 남음' },
     { id: 'sprite', sc: 2, f: 30, ep: 2, s: '2화 01:52에서 멈춤 · 1분 28초 남음' },
@@ -197,7 +196,7 @@
   }
   function cShort(s) {
     var w = K.work(s.work);
-    return '<a class="card short" href="shorts.html#' + s.id + '" data-kind="short"><div class="c-pic"><img src="' + s.poster + '" alt="" loading="lazy" draggable="false"><video muted playsinline loop preload="none" data-src="' + s.src + '"></video><span class="c-name">' + esc(s.title) + '</span></div>' +
+    return '<a class="card short" href="work.html?id=' + w.id + '" data-id="' + w.id + '" data-kind="short"><div class="c-pic"><img src="' + s.poster + '" alt="" loading="lazy" draggable="false"><video muted playsinline loop preload="none" data-src="' + s.src + '"></video><span class="c-name">' + esc(s.title) + '</span></div>' +
       '<div class="c-bridge">' + I.film + '<span>본편 <b>' + esc(w.title) + '</b> ' + esc(s.at) + '부터</span></div></a>';
   }
   function cEmpty() { return '<div class="card empty"><div class="c-pic"><span>아직 보관한 작품이 없어요.<br>작품 카드의 ‘보관’을 눌러 보세요.</span></div></div>'; }
@@ -426,7 +425,7 @@
     html += secHTML({ key: 'orig', type: 'tall', title: '키벨로 오리지널', desc: '키벨로가 창작자와 함께 기획한 작품', reveal: 1, arrows: 1,
       body: railHTML(['spring', 'charge', 'singularity', 'sprite', 'sintel'].map(function (id) { return cWork(W(id), { tall: 1, noOrig: 1 }); }).join('')) });
     html += secHTML({ key: 'shorts', type: 'shorts', title: '쇼츠', desc: '짧게 보고, 마음에 들면 그 장면부터 본편으로 이어 봅니다', reveal: 1, arrows: 1,
-      all: '<a class="all" href="shorts.html">쇼츠 전체' + I.chev + '</a>', body: railHTML(K.shorts.map(cShort).join('')) });
+      body: railHTML(K.shorts.map(cShort).join('')) });
     html += secHTML({ key: 'scene', type: 'scene', title: '명장면', desc: '작품 9편에서 고른 장면입니다. 누르면 그 장면부터 재생합니다',
       all: '<button class="all" type="button" data-act="allscenes">장면 36개 모두 보기' + I.chev + '</button>',
       body: '<div class="mz-grid">' + MZ.map(function (x, i) { return mzHTML(W(x[0]), x[1], x[2], x[3], i); }).join('') + '</div>' });
@@ -523,8 +522,9 @@
   }
   function ntHTML(w) {
     var c = K.creatorOf(w), vsrc = w.montage ? w.montage.src : w.prev, cont = CONTM[w.id];
-    var label = w.series ? '2화 이어서 보기' : cont ? '이어서 보기' : '바로 보기';
-    var pa = 'data-act="play" data-id="' + w.id + '"' + (w.series ? ' data-ep="2"' : cont ? ' data-scene="' + cont.sc + '"' : '');
+    var open1 = K.epsOpen(w)[0];
+    var label = cont && cont.ep ? cont.ep + (w.unit || '화') + ' 이어서 보기' : cont ? '이어서 보기' : open1 ? open1.label + ' 보기' : '바로 보기';
+    var pa = 'data-act="play" data-id="' + w.id + '"' + (cont && cont.ep ? ' data-ep="' + cont.ep + '"' : cont ? ' data-scene="' + cont.sc + '"' : open1 ? ' data-ep="' + open1.no + '"' : '');
     var tabs = [['about', '개요'], w.series ? ['eps', '회차', w.series.length] : null, ['made', '만든 과정'], ['scenes', '장면', w.scenes.length], ['sim', '비슷한 작품']].filter(Boolean);
     var h = '<div class="nt-top"><button class="nt-x" type="button" data-act="close">' + I.out + '닫기</button><div class="nt-r"><span class="nt-k">작품 노트</span><span class="nt-mini" id="ntMini"><span>' + esc(w.title) + '</span><button class="pbtn go" type="button" ' + pa + '>' + I.play + label + '</button></span></div></div>';
     h += '<div class="nt-media" id="ntMedia"><img src="' + w.wide + '" alt=""><video muted playsinline loop preload="none" data-src="' + vsrc + '"></video><button class="vmute" type="button" data-act="mute" aria-label="소리">' + I.volx + '</button></div>';
@@ -537,10 +537,12 @@
     h += '<section class="nt-sec" id="nt-about"><p class="nt-log">' + esc(w.logline) + '</p><div class="nt-memo"><b>창작자 메모 · ' + esc(c.name) + '</b>' + esc(w.memo) + '</div>' +
       '<dl class="nt-dl"><dt>장르</dt><dd>' + esc(w.genre) + '</dd><dt>분위기</dt><dd>' + esc(tagsOf(w).join(', ')) + '</dd><dt>화풍</dt><dd>' + esc(w.look) + '</dd><dt>만든 방식</dt><dd>' + esc(w.method) + '</dd><dt>보는 방법</dt><dd>' + (w.free ? '무료 · 시작 전 광고 1회' : '구독 · 광고 없이') + '</dd><dt>자막</dt><dd>한국어 · 영어</dd></dl></section>';
     if (w.series) {
-      h += '<section class="nt-sec" id="nt-eps"><h3>회차 <small>시즌 1 · 매주 일요일 한 화씩</small></h3><div class="eps">' + w.series.map(function (e, i) {
-        var now = e.no === 2;
-        return '<div class="ep2' + (now ? ' now' : '') + '" data-act="play" data-id="' + w.id + '" data-ep="' + e.no + '"><div class="c-pic"><img src="' + w.scenes[Math.min(i, w.scenes.length - 1)].img + '" alt="" loading="lazy">' + (now ? segsHTML(1, 0, 56) : '') + '</div>' +
-          '<b>' + e.no + '화 · ' + esc(e.title) + '<span>' + e.len + '</span></b><p>' + esc(EPDESC[e.no] || '') + '</p></div>';
+      h += '<section class="nt-sec" id="nt-eps"><h3>회차 <small>누르면 그 회차를 바로 재생합니다</small></h3><div class="eps">' + w.series.map(function (e) {
+        var now = cont && cont.ep === e.no;
+        if (e.soon) return '<div class="ep2 soon" data-act="epsoon" data-when="' + esc(e.soon) + '"><div class="c-pic"><img src="' + e.img + '" alt="" loading="lazy"><span class="ep-soon">' + I.bell + esc(e.soon) + '</span></div>' +
+          '<b>' + esc(e.label) + ' · ' + esc(e.title) + '<span>' + e.len + '</span></b><p>' + esc(e.desc || '') + '</p></div>';
+        return '<div class="ep2' + (now ? ' now' : '') + '" data-act="play" data-id="' + w.id + '" data-ep="' + e.no + '"><div class="c-pic"><img src="' + e.img + '" alt="" loading="lazy"><span class="ep-play">' + I.play + '</span>' + (now ? segsHTML(1, 0, 56) : '') + '</div>' +
+          '<b>' + esc(e.label) + ' · ' + esc(e.title) + '<span>' + e.len + '</span></b><p>' + esc(e.desc || '') + '</p></div>';
       }).join('') + '</div></section>';
     }
     h += '<section class="nt-sec" id="nt-made"><h3>만든 과정 <small>공정마다 사람이 했는지 AI로 했는지 창작자가 적었습니다</small></h3>' + mkHTML(w) + '</section>';
@@ -549,7 +551,7 @@
     }).join('') + '</div>';
     var mine = K.shorts.filter(function (s) { return s.work === w.id; });
     if (mine.length) h += '<h3 style="margin:32px 0 14px;font-size:16px">이 작품에서 나온 쇼츠</h3><div class="nt-shorts">' + mine.map(function (s) {
-      return '<a class="card short" href="shorts.html#' + s.id + '" data-kind="short"><div class="c-pic"><img src="' + s.poster + '" alt="" loading="lazy"><span class="c-name">' + esc(s.title) + '</span></div></a>';
+      return '<a class="card short" href="watch.html?id=' + w.id + '&t=' + sceneIdx(w, s.at) + '" data-act="play" data-id="' + w.id + '" data-scene="' + sceneIdx(w, s.at) + '" data-kind="short"><div class="c-pic"><img src="' + s.poster + '" alt="" loading="lazy"><span class="c-name">' + esc(s.title) + '</span></div></a>';
     }).join('') + '</div>';
     h += '</section>';
     h += '<section class="nt-sec" id="nt-sim"><h3>비슷한 작품 <small>같은 도구·분위기로 만든 작품부터</small></h3><div class="sims">' + similar(w).slice(0, 6).map(function (x) {
@@ -726,6 +728,7 @@
       if (act === 'look') { showLook(t.dataset.l); return; }
       if (act === 'tool') { setTool(t.dataset.t); return; }
       if (act === 'allscenes') { showAllScenes(); return; }
+      if (act === 'epsoon') { toast(t.dataset.when + '. 알림을 켜 두면 공개될 때 알려 드릴게요'); return; }
       if (act === 'chmore') { var chs = $('#chart'); chs.classList.toggle('open'); t.textContent = chs.classList.contains('open') ? '접기' : '6~9위 더 보기'; return; }
     }
     var tb = e.target.closest('.tabs button'); if (tb) { setTab(tb.closest('.sec'), tb.dataset.tab); return; }
@@ -749,7 +752,8 @@
     }
     var card = e.target.closest('.card, .chr, .mz, .cr, .sn');
     if (!card || !(card.closest('.browse') || card.closest('.results') || card.closest('.nt'))) return;
-    if (card.classList.contains('short') || card.classList.contains('empty')) return;
+    if (card.classList.contains('empty')) return;
+    if (card.classList.contains('short') && card.closest('.nt')) return;
     e.preventDefault();
     if (card.classList.contains('cr')) { runSearch(K.creators[card.dataset.cr].name); return; }
     if (card.classList.contains('mz')) { go(card.getAttribute('href'), e.clientX, e.clientY); return; }
@@ -913,7 +917,8 @@
     if (!mon) vid.loop = true;
     var parts = mon ? mon.parts : [{ at: 0, scene: 0 }];
     var total = mon ? mon.total : 5;
-    $('#wpTitle').textContent = w.title + (w.series ? ' · ' + (ep || 1) + '화' : '');
+    var curEp = w.series ? (w.series.filter(function (e) { return e.no === (ep || 1); })[0] || w.series[0]) : null;
+    $('#wpTitle').textContent = w.title + (curEp ? ' · ' + curEp.label : '');
     var note = $('#wpNote'); if (note) note.href = 'work.html?id=' + w.id;
     var fmt = function (s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); };
     var bar = $('#wpBar'), rail = $('.wp-rail', bar), knob = $('#wpKnob'), tip = $('#wpTip'), xr = $('#wpX'), xOn = true, last = -1;
@@ -983,9 +988,10 @@
         }, 260);
       }
     });
-    var seriesNext = w.series && (ep || 1) < w.series.length;
+    var nextEp = curEp ? K.epsOpen(w).filter(function (e) { return e.no > curEp.no; })[0] : null;
+    var seriesNext = !!nextEp;
     var picks = [];
-    if (seriesNext) picks.push({ url: 'watch.html?id=' + w.id + '&ep=' + ((ep || 1) + 1), img: w.scenes[Math.min(ep || 1, w.scenes.length - 1)].img, t: w.title + ' ' + ((ep || 1) + 1) + '화', r: '다음 화' });
+    if (nextEp) picks.push({ url: 'watch.html?id=' + w.id + '&ep=' + nextEp.no, img: nextEp.img, t: w.title + ' ' + nextEp.label, r: '다음 ' + (w.unit || '화') });
     similar(w).slice(0, 2).forEach(function (x) { picks.push({ url: 'watch.html?id=' + x.id, img: x.wide, t: x.title, r: reason(w, x) }); });
     picks = picks.slice(0, 2);
     var endEl = $('#wpEnd'), endT;
@@ -1009,8 +1015,9 @@
     if (w.series) {
       var eb = $('#wpEps'); eb.hidden = false;
       var epp = $('#wpEpsPanel');
-      epp.innerHTML = '<h4>' + esc(w.title) + ' · 시즌 1</h4>' + w.series.map(function (e2, i) {
-        return '<a href="watch.html?id=' + w.id + '&ep=' + e2.no + '" class="' + ((ep || 1) === e2.no ? 'on' : '') + '"><img src="' + w.scenes[Math.min(i, w.scenes.length - 1)].img + '" alt=""><div><b>' + e2.no + '화 · ' + esc(e2.title) + '</b><span>' + e2.len + ' · ' + esc(EPDESC[e2.no] || '') + '</span></div></a>';
+      epp.innerHTML = '<h4>' + esc(w.title) + ' · 회차</h4>' + w.series.map(function (e2) {
+        if (e2.soon) return '<div class="soon"><img src="' + e2.img + '" alt=""><div><b>' + esc(e2.label) + ' · ' + esc(e2.title) + '</b><span>' + esc(e2.soon) + '</span></div></div>';
+        return '<a href="watch.html?id=' + w.id + '&ep=' + e2.no + '" class="' + (curEp && curEp.no === e2.no ? 'on' : '') + '"><img src="' + e2.img + '" alt=""><div><b>' + esc(e2.label) + ' · ' + esc(e2.title) + '</b><span>' + e2.len + ' · ' + esc(e2.desc || '') + '</span></div></a>';
       }).join('');
       eb.addEventListener('click', function (e) { e.stopPropagation(); epp.classList.toggle('on'); });
       document.addEventListener('click', function (e) { if (!e.target.closest('#wpEpsPanel')) epp.classList.remove('on'); });

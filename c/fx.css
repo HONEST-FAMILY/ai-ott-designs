@@ -1,14 +1,5 @@
-body::before { background: var(--bg); }
-.logo i { background: var(--teal); box-shadow: none; }
-.greet span { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: var(--teal); }
 .mono { font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--teal); }
 .tool small { font-family: var(--sans); }
-.glass { background: #0f131b; -webkit-backdrop-filter: none; backdrop-filter: none; }
-.bubble .av, .lst .note .av, .chat-h .av, .ci-note .av, .orb-mini { background: var(--teal) !important; box-shadow: none !important; display: grid; place-items: center; border-radius: 50%; }
-.bubble .av::after, .lst .note .av::after, .chat-h .av::after, .ci-note .av::after, .orb-mini::after { content: "K"; font: 700 14px/1 var(--lat); color: #06080c; }
-.lst .note .av::after, .ci-note .av::after { font-size: 11px; }
-.orb-mini { width: 56px !important; height: 56px !important; }
-.orb-mini::after { font-size: 24px; }
 .ring { display: none !important; }
 .pick-pic .m { gap: 5px; padding: 5px 10px; }
 .pick-pic .m b { color: var(--teal); font-weight: 800; }
@@ -94,3 +85,22 @@ img.fly { position: absolute; z-index: 300; object-fit: cover; border-radius: 10
   .st-in { animation: none; }
   .rv { opacity: 1; transform: none; }
 }
+
+.w-eps { margin-top: 26px; display: grid; gap: 10px; }
+.we-h { font-size: 15px; font-weight: 700; display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px; }
+.we-h span { font-size: 13px; color: var(--mute); font-weight: 500; }
+.wep { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px; align-items: center; padding: 8px; border-radius: 16px; text-align: left; cursor: pointer; transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .3s; }
+.wep:hover { transform: translateX(4px); }
+.wep.on { box-shadow: inset 0 0 0 1.5px var(--teal); }
+.wep-pic { position: relative; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; display: block; }
+.wep-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wep-pic i { position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; background: rgba(255, 255, 255, .92); color: #06080c; display: grid; place-items: center; transform: scale(.85); transition: transform .3s; }
+.wep-pic i svg { width: 12px; height: 12px; margin-left: 2px; }
+.wep:hover .wep-pic i { transform: scale(1.05); }
+.wep-b b { display: block; font-size: 15px; }
+.wep-b span { display: block; margin-top: 3px; font-size: 13px; color: var(--mute); line-height: 1.45; }
+.wep.soon { cursor: default; opacity: .55; }
+.wep.soon:hover { transform: none; }
+.wp-ep { position: absolute; z-index: 3; left: 16px; top: 14px; padding: 5px 12px; border-radius: 999px; background: rgba(6, 8, 12, .72); font-size: 12.5px; font-weight: 700; opacity: 0; transition: opacity .35s; pointer-events: none; }
+.wp-ep.show { opacity: 1; }
+@media (max-width: 760px) { .wep { grid-template-columns: 120px minmax(0, 1fr); } }

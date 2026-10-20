@@ -422,7 +422,7 @@ body.searching .results { display: block; }
 .strip h2 { margin: 0; font-family: var(--kserif); font-weight: 500; font-size: clamp(28px, 2.8vw, 42px); line-height: 1.2; letter-spacing: -0.03em; }
 .strip p { margin: 14px 0 24px; color: #ddd6cc; font-size: 15.5px; }
 
-.foot { margin-top: clamp(60px, 7vw, 100px); padding: 54px var(--pad) 110px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); gap: 30px 40px; font-size: 13.5px; color: var(--mute); }
+.foot { margin-top: clamp(60px, 7vw, 100px); padding: 54px var(--pad) 110px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1.8fr) repeat(2, minmax(0, 1fr)); gap: 30px 40px; font-size: 13.5px; color: var(--mute); }
 .foot-brand .logo { font-size: 26px; color: var(--text); }
 .foot-brand p { margin: 14px 0 0; max-width: 360px; line-height: 1.65; }
 .foot-col b { display: block; margin-bottom: 12px; color: var(--text); font-size: 13.5px; }
@@ -521,6 +521,16 @@ body.searching .results { display: block; }
 .ep2 b { display: flex; align-items: baseline; gap: 8px; margin-top: 10px; font-size: 15px; }
 .ep2 b span { margin-left: auto; font-weight: 500; color: var(--mute); font-size: 13px; }
 .ep2 p { margin: 4px 0 0; font-size: 13.5px; color: var(--mute); line-height: 1.5; }
+.ep2 .c-pic { position: relative; }
+.ep-play { position: absolute; z-index: 2; left: 10px; bottom: 10px; width: 34px; height: 34px; border-radius: 50%; background: var(--text); color: var(--bg); display: grid; place-items: center; transform: scale(.88); transition: transform .35s var(--ease); }
+.ep-play svg { width: 12px; height: 12px; margin-left: 2px; }
+.ep2:hover .ep-play { transform: scale(1.06); }
+.ep2.now .ep-play { bottom: 22px; }
+.ep2.soon { cursor: default; }
+.ep2.soon .c-pic img { filter: grayscale(.5) brightness(.55); }
+.ep2.soon:hover .c-pic img { transform: none; }
+.ep-soon { position: absolute; z-index: 2; left: 10px; bottom: 10px; display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 11px 0 9px; border-radius: 999px; background: rgba(13, 12, 11, .82); font-size: 12px; font-weight: 700; color: var(--gold); }
+.ep-soon svg { width: 13px; height: 13px; }
 .ep2.now b::before { content: "보는 중"; flex: none; font-size: 11px; font-weight: 700; color: var(--ember); border: 1px solid rgba(255, 106, 61, .5); border-radius: 4px; padding: 0 5px; line-height: 17px; align-self: center; }
 .scs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .sc2 { cursor: pointer; }

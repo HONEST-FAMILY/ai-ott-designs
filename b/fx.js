@@ -214,7 +214,7 @@
     if (pb && !reduce) {
       var lights = el('div', 'fx-lights'); document.body.appendChild(lights);
       pb.addEventListener('click', function (e) {
-        lights.style.setProperty('--x', e.clientX + 'px'); lights.style.setProperty('--y', e.clientY + 'px');
+        lights.style.setProperty('--lx', e.clientX + 'px'); lights.style.setProperty('--ly', e.clientY + 'px');
         lights.classList.add('on'); setTimeout(function () { lights.classList.remove('on'); }, 900);
       }, true);
     }
