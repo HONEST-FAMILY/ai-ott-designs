@@ -13,13 +13,13 @@
 <body data-open>
 <header class="nav" id="nav">
   <a class="logo" href="index.html" aria-label="KIVELO 홈">KIVEL<em>O</em><sup>AI CINEMA</sup></a>
-  <nav aria-label="주 메뉴">
+  <nav class="menu" id="menu" aria-label="주 메뉴">
     <a class="on" href="index.html">홈</a>
-    <a href="#row-trend">시네마</a>
+    <a href="#sec-method">시네마</a>
     <a href="shorts.html">쇼츠</a>
-    <a href="#row-scene">명장면</a>
-    <a href="#row-new">새로 올라온 작품</a>
-    <a href="#row-list">내가 찜한 작품</a>
+    <a href="#sec-scene">명장면</a>
+    <a href="#sec-soon">공개 예정</a>
+    <i class="menu-ind" aria-hidden="true"></i>
   </nav>
   <div class="nav-r">
     <form class="srch" id="srch" role="search">
@@ -27,26 +27,27 @@
       <input id="srchIn" type="search" placeholder="제목, 창작자, 장르, 만든 도구" aria-label="검색어">
       <button class="srch-x" type="button" id="srchX" aria-label="지우기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </form>
-    <a class="nr-link" href="../studio/index.html">창작자 스튜디오</a>
+    <a class="upl" href="../studio/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 15v5h14v-5"/></svg>작품 올리기</a>
+    <a class="ib" id="keepBtn" href="#sec-mine" data-keep aria-label="보관함"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v17l-6-4-6 4z"/></svg><b id="keepN">2</b></a>
     <div class="drop" id="bellDrop">
-      <button class="drop-btn bell" type="button" aria-label="알림" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><b id="bellN">3</b></button>
+      <button class="drop-btn ib" type="button" aria-label="알림" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><i class="dot" id="bellDot"></i></button>
       <div class="drop-menu" id="bellMenu" role="menu"></div>
     </div>
     <div class="drop" id="profDrop">
-      <button class="drop-btn" type="button" aria-label="내 계정" aria-haspopup="true"><span class="avatar"><img src="../assets/media/scene/coffee_1.jpg" alt=""></span><svg class="caret" viewBox="0 0 24 24" fill="currentColor"><path d="M6 9h12l-6 7z"/></svg></button>
+      <button class="drop-btn" type="button" aria-label="내 계정" aria-haspopup="true"><span class="avatar"><img src="../assets/media/scene/coffee_1.jpg" alt=""></span></button>
       <div class="drop-menu prof-menu" role="menu">
         <div class="prof-plan"><b>무료로 보는 중</b>작품 시작 전에 광고가 한 번 나옵니다. 구독하면 광고 없이 바로 봅니다.<br><a href="#">구독 안내</a></div>
-        <a href="#row-list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v17l-6-4-6 4z"/></svg>내가 찜한 작품</a>
+        <a href="#sec-mine" data-keep><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v17l-6-4-6 4z"/></svg>보관함</a>
+        <a href="#sec-mine"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>본 작품 기록</a>
         <a href="../studio/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16M6 16l9-9 3 3-9 9H6z"/></svg>창작자 스튜디오</a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>계정</a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17.5v.5"/></svg>고객 센터</a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>계정 설정</a>
         <hr>
-        <a href="#" style="justify-content:center">키벨로에서 로그아웃</a>
+        <a href="#">로그아웃</a>
       </div>
     </div>
   </div>
 </header>
-<div class="pills" id="pills"><a href="#row-trend">시네마</a><a href="shorts.html">쇼츠</a><a href="#row-scene">명장면</a></div>
+<nav class="mtabs" id="mtabs" aria-label="보기"><a class="on" href="index.html">홈</a><a href="#sec-method">시네마</a><a href="shorts.html">쇼츠</a><a href="#sec-scene">명장면</a></nav>
 
 <section class="hero" id="hero" aria-label="오늘의 상영">
   <div class="hero-media" id="heroMedia"></div>
@@ -68,32 +69,27 @@
 </section>
 
 <footer class="foot">
-  <div class="foot-sns" aria-hidden="true">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4 1.7-4 4.2V10H7v4h3v8h4v-8h3l1-4h-4V8.6c0-.4.2-.6.6-.6Z"/></svg>
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg>
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.6 2.6 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3Z"/></svg>
+  <div class="foot-brand">
+    <a class="logo" href="index.html">KIVEL<em>O</em></a>
+    <p>AI로 만든 영화와 애니메이션을 모아 상영합니다. 작품마다 무엇을 사람이 만들고 무엇을 AI로 만들었는지 함께 보여 드립니다.</p>
   </div>
-  <nav class="foot-links">
-    <a href="#">자주 묻는 질문</a><a href="#">고객 센터</a><a href="#">구독 안내</a><a href="#">창작자 센터</a>
-    <a href="#">이용 약관</a><a href="#">개인정보 처리방침</a><a href="#">광고 문의</a><a href="#">권리 침해 신고</a>
-  </nav>
-  <a class="foot-code" href="#">문의하기</a>
-  <p class="corp">키벨로 · 고객센터 운영 시간 평일 10:00~18:00</p>
+  <div class="foot-col"><b>보기</b><a href="#sec-method">시네마</a><a href="shorts.html">쇼츠</a><a href="#sec-scene">명장면</a><a href="#sec-soon">공개 예정</a></div>
+  <div class="foot-col"><b>창작자</b><a href="../studio/index.html">작품 올리기</a><a href="#">검수 기준</a><a href="#">제작정보 쓰는 법</a><a href="#">권리 침해 신고</a></div>
+  <div class="foot-col"><b>도움</b><a href="#">자주 묻는 질문</a><a href="#">구독 안내</a><a href="#">고객 센터</a><a href="#">광고 문의</a></div>
+  <div class="foot-legal"><a href="#">이용 약관</a><a href="#">개인정보 처리방침</a><a href="#">청소년 보호 정책</a><span>키벨로 · 고객 센터 평일 10:00~18:00</span></div>
   <p class="note">시안용 화면입니다. 작품 제목·창작자·제작정보·숫자는 화면 구성을 보여주기 위한 가상의 예시입니다. 영상과 이미지는 Blender Foundation의 오픈 무비(CC BY 3.0·4.0) 장면을 잘라 썼습니다 — Spring, Charge, Singularity, Sprite Fright, Coffee Run, Hero, Wing It!, Glass Half, Sintel · © Blender Foundation | studio.blender.org</p>
 </footer>
 
 <nav class="tabbar" aria-label="하단 메뉴">
   <a class="on" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg>홈</a>
   <a href="shorts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="m11 10 3 2-3 2z" fill="currentColor"/></svg>쇼츠</a>
-  <a href="#row-new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg>새로 올라온</a>
-  <a href="#row-list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>내 키벨로</a>
+  <a href="#" data-find><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>찾기</a>
+  <a href="#sec-mine" data-keep><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v17l-6-4-6 4z"/></svg>보관함<b id="keepN2">2</b></a>
 </nav>
 
-<div class="pv" id="pv" aria-hidden="true"></div>
-<div class="mo" id="mo" role="dialog" aria-modal="true" aria-label="작품 상세"></div>
-<div class="sheet" id="sheet" aria-hidden="true"></div>
+<div class="nt" id="nt" role="dialog" aria-modal="true" aria-label="작품 노트"></div>
 <div class="toast" id="toast" role="status"></div>
-<div class="wipe" id="wipe"></div>
+<div class="wipe" id="wipe"><i></i><i></i></div>
 <script src="../assets/data.js"></script>
 <script src="a.js"></script>
 <script src="../assets/switcher.js"></script>

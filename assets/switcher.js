@@ -2,7 +2,7 @@
   var here = location.pathname;
   var root = here.replace(/\/(a|b|c|studio)\/[^\/]*$/, '/').replace(/\/[^\/]*$/, '/');
   var cur = (here.match(/\/(a|b|c|studio)\//) || [])[1] || '';
-  var names = { a: '1안 · 넷플릭스형', b: '2안 · 극장형', c: '3안 · AI 큐레이터', studio: '창작자 화면 · 공통' };
+  var names = { a: '1안 · AI 영상관', b: '2안 · 극장형', c: '3안 · AI 큐레이터', studio: '창작자 화면 · 공통' };
   var css = '' +
     '.kv-sw{position:fixed;z-index:9999;right:16px;bottom:16px;font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif;}' +
     '.kv-sw.left{right:auto;left:16px}' +
