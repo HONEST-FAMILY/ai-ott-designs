@@ -42,12 +42,6 @@
   var MOVE = { spring: ['same'], charge: ['up', 2], sprite: ['new'], singularity: ['dn', 1], sintel: ['up', 1], wingit: ['dn', 2], hero: ['new'], coffee: ['same'], glass: ['up', 3] };
   var LIST = ['glass', 'coffee'];
   var LIKE = {};
-  var METH = [
-    { k: 'ai', t: 'AI로 만든 작품', d: '그림과 영상 대부분을 AI로 만들고, 각본과 편집은 사람이 맡았습니다' },
-    { k: 'mix', t: '사람과 AI가 함께 만든 작품', d: '사람이 그린 원화와 연기에 AI가 움직임과 배경을 더했습니다' },
-    { k: 'human', t: '사람이 만들고 AI가 거든 작품', d: '그림과 움직임은 사람이, 배경과 색 채우기 일부만 AI가 했습니다' }
-  ];
-  var LOOKS = [['real', '실사풍'], ['paint', '회화풍'], ['toon', '3D 카툰'], ['flat', '2D 손그림'], ['abstract', '3D 추상']];
   var TOOLD = { '이미지': '원화와 배경을 그린 작품', '영상': '움직임을 만든 작품', '목소리': '목소리를 입힌 작품', '음악': '음악을 만든 작품', '보정': '화면을 다듬은 작품' };
 
   function age(w) { return w.rating === '전체관람가' ? '전체' : w.rating.replace('세 이상', '+'); }
@@ -207,14 +201,6 @@
     return '<a class="chr" href="work.html?id=' + id + '" data-id="' + id + '" data-kind="work" style="--i:' + i + ';--n:' + (i + 1) + '"><span class="ch-n" aria-label="' + (i + 1) + '위"><span aria-hidden="true">' + dg + '</span></span>' + mvh +
       '<span class="ch-pic"><img src="' + w.wide + '" alt="" loading="lazy"><video muted playsinline loop preload="none" data-src="' + w.prev + '"></video></span>' +
       '<span class="ch-b"><b>' + esc(w.title) + '</b><span>' + esc(c.name) + ' · ' + esc(w.genre) + '</span><em>' + esc(madeText(w, 3)) + '</em></span><span class="ch-go">' + I.play + '</span></a>';
-  }
-  function mtHTML(m) {
-    var ws = K.works.filter(function (w) { return w.methodKey === m.k; });
-    var avg = Math.round(ws.reduce(function (a, w) { return a + K.aiShare(w); }, 0) / Math.max(1, ws.length));
-    var pics = ws.map(function (w) { return w.wide; });
-    if (pics.length < 3) pics.push(ws[0].scenes[1].img);
-    return '<button class="mt" type="button" data-act="method" data-m="' + m.k + '"><span class="mt-fan"><img src="' + pics[1] + '" alt="" loading="lazy"><img src="' + pics[2] + '" alt="" loading="lazy"><img src="' + pics[0] + '" alt="" loading="lazy"></span>' +
-      '<span class="mt-n">' + ws.length + '편</span><h3>' + esc(m.t) + '</h3><p>' + esc(m.d) + '</p><span class="mt-bar" style="--ai:' + avg + '%"><i></i></span><span class="mt-leg"><span>AI가 맡은 공정 평균 <b>' + avg + '%</b></span><span>보러 가기 ›</span></span></button>';
   }
   function mzHTML(w, j, cls, area, i) {
     var s = w.scenes[j];
@@ -417,11 +403,6 @@
       body: '<div class="pane on" data-pane="cont">' + railHTML(CONT.map(cCont).join('')) + '</div><div class="pane" data-pane="keep">' + railHTML(LIST.length ? LIST.map(function (id) { return cWork(W(id)); }).join('') : cEmpty()) + '</div>' });
     html += secHTML({ key: 'chart', type: 'chart', title: '이번 주 많이 본 작품', desc: fine ? '지난 7일 동안 많이 본 순서입니다. 마우스를 올리면 바로 미리 봅니다' : '지난 7일 동안 많이 본 순서입니다',
       body: '<div class="chart" id="chart">' + TOP.map(chRow).join('') + '</div><div class="ch-more"><button type="button" data-act="chmore">6~9위 더 보기</button></div>' });
-    html += secHTML({ key: 'method', type: 'method', title: '만든 방식으로 고르기', desc: '같은 AI 영상이라도 사람이 맡은 몫이 다릅니다',
-      body: '<div class="methods">' + METH.map(mtHTML).join('') + '</div><div class="looks"><span>화풍으로 고르기</span>' + LOOKS.map(function (l) {
-        var n = K.works.filter(function (w) { return w.lookKey === l[0]; }).length;
-        return '<button class="chip" type="button" data-act="look" data-l="' + l[0] + '">' + l[1] + '<span>' + n + '</span></button>';
-      }).join('') + '</div>' });
     html += secHTML({ key: 'orig', type: 'tall', title: '키벨로 오리지널', desc: '키벨로가 창작자와 함께 기획한 작품', reveal: 1, arrows: 1,
       body: railHTML(['spring', 'charge', 'singularity', 'sprite', 'sintel'].map(function (id) { return cWork(W(id), { tall: 1, noOrig: 1 }); }).join('')) });
     html += secHTML({ key: 'shorts', type: 'shorts', title: '쇼츠', desc: '짧게 보고, 마음에 들면 그 장면부터 본편으로 이어 봅니다', reveal: 1, arrows: 1,
@@ -452,8 +433,6 @@
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.12 });
       $$('#browse .sec').forEach(function (r) { io.observe(r); });
     } else $$('#browse .sec').forEach(function (r) { r.classList.add('in'); });
-    var sb = $('#stripBg');
-    if (sb) sb.innerHTML = ['spring_1', 'charge_3', 'singularity_1', 'sprite_2', 'sintel_2', 'hero_2', 'wingit_3', 'coffee_1', 'glass_1', 'spring_4', 'singularity_3', 'charge_5'].map(function (n) { return '<img src="' + M + 'scene/' + n + '.jpg" alt="" loading="lazy">'; }).join('');
     if (location.hash === '#keep') setTimeout(openKeep, 120);
   }
 
@@ -724,8 +703,6 @@
       if (act === 'share') { toast('작품 주소를 복사했어요'); return; }
       if (act === 'mute') { var vv = $('#ntMedia video'); if (vv) { vv.muted = !vv.muted; t.innerHTML = vv.muted ? I.volx : I.vol; } return; }
       if (act === 'creator') { e.preventDefault(); var cr = K.creators[t.dataset.cr]; closeNote(); setTimeout(function () { runSearch(cr.name); }, 380); return; }
-      if (act === 'method') { showMethod(t.dataset.m); return; }
-      if (act === 'look') { showLook(t.dataset.l); return; }
       if (act === 'tool') { setTool(t.dataset.t); return; }
       if (act === 'allscenes') { showAllScenes(); return; }
       if (act === 'epsoon') { toast(t.dataset.when + '. 알림을 켜 두면 공개될 때 알려 드릴게요'); return; }
@@ -783,17 +760,6 @@
   function backBar(rel) {
     return '<div class="res-top"><button class="res-back" type="button" data-home>' + I.left + '홈으로</button>' +
       (rel && rel.length ? '<div class="res-rel"><span>관련</span>' + rel.map(function (k) { return '<button type="button" data-q="' + esc(k) + '">' + esc(k) + '</button>'; }).join('') + '</div>' : '') + '</div>';
-  }
-  function showSet(title, desc, ws) {
-    showResults(backBar() + '<h2 class="res-title">' + esc(title) + '</h2><p class="res-desc">' + esc(desc) + '</p><div class="res-grid">' + ws.map(function (w) { return cWork(w); }).join('') + '</div>');
-  }
-  function showMethod(k) {
-    var m = METH.filter(function (x) { return x.k === k; })[0];
-    showSet(m.t, m.d, K.works.filter(function (w) { return w.methodKey === k; }));
-  }
-  function showLook(l) {
-    var lb = LOOKS.filter(function (x) { return x[0] === l; })[0];
-    showSet(lb[1] + ' 작품', '화풍이 ' + lb[1] + '인 작품을 모았습니다', K.works.filter(function (w) { return w.lookKey === l; }));
   }
   function showAllScenes() {
     var h = '';
