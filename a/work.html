@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>작품 — KIVELO 시안 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+KR:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="a.css">
+</head>
+<body class="grain force-solid">
+<header class="nav solid" id="nav">
+  <a class="logo" href="index.html" aria-label="KIVELO 홈">KIVEL<em>O</em><sup>AI CINEMA</sup></a>
+  <nav aria-label="주 메뉴">
+    <a href="index.html">홈</a>
+    <a class="on" href="index.html#wall-sec">시네마</a>
+    <a href="shorts.html">쇼츠</a>
+    <a href="index.html#find">제작정보로 찾기</a>
+    <a href="index.html#creators">창작자</a>
+  </nav>
+  <div class="nav-r">
+    <a class="icon-btn" href="index.html#find" aria-label="검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></a>
+    <a class="login" href="#">로그인</a>
+    <a class="btn-sub" href="index.html#plans">구독하기</a>
+  </div>
+</header>
+
+<main class="w-top">
+  <div class="player" id="player" aria-label="영상 플레이어"></div>
+
+  <section class="w-body">
+    <div>
+      <h1 class="w-title" id="wTitle"></h1>
+      <div class="w-en" id="wEn"></div>
+      <div class="w-meta" id="wMeta"></div>
+      <p class="w-log" id="wLog"></p>
+      <div class="w-act" id="wAct"></div>
+      <div id="wSeries"></div>
+      <div id="wShorts"></div>
+    </div>
+    <aside class="label" id="label" aria-label="AI 제작정보"></aside>
+  </section>
+
+  <section class="sec" style="padding-top:clamp(64px,8vw,110px)">
+    <div class="sec-head">
+      <div>
+        <h2>장면으로 보기</h2>
+        <p>장면마다 어떤 도구로, 누가 만들었는지 적혀 있습니다. 누르면 그 장면부터 재생합니다.</p>
+      </div>
+    </div>
+    <div class="scene-strip" id="sceneStrip"></div>
+  </section>
+
+  <section class="sec" id="creator">
+    <div class="sec-head"><div><h2>만든 사람</h2></div></div>
+    <div class="cr-block" id="crBlock"></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <div>
+        <h2>같은 방식으로 만든 작품</h2>
+        <p>같은 AI 도구, 같은 제작 방식으로 만든 작품을 먼저 보여 드립니다.</p>
+      </div>
+    </div>
+    <div class="related" id="related"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div>
+    <a class="logo" href="index.html">KIVEL<em>O</em></a>
+    <div>AI로 만든 영화·애니메이션·쇼츠를 모아 보는 곳</div>
+  </div>
+  <nav><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="#">창작자 센터</a><a href="#">고객센터</a></nav>
+  <p class="note">시안용 화면입니다. 작품 제목·창작자·제작정보·숫자는 화면 구성을 보여주기 위한 가상의 예시입니다. 영상과 이미지는 Blender Foundation의 오픈 무비(CC BY 3.0·4.0) 장면을 잘라 썼습니다 — © Blender Foundation | studio.blender.org</p>
+</footer>
+
+<nav class="tabbar" aria-label="하단 메뉴">
+  <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg>홈</a>
+  <a href="index.html#find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>찾기</a>
+  <a href="shorts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="m11 10 3 2-3 2z" fill="currentColor"/></svg>쇼츠</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v17l-6-4-6 4z"/></svg>보관함</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>내 정보</a>
+</nav>
+<script src="../assets/data.js"></script>
+<script src="a.js"></script>
+<script src="../assets/switcher.js"></script>
+</body>
+</html>
