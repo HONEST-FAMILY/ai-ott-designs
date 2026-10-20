@@ -129,7 +129,7 @@
   if ($('#bkT')) {
     var qs = new URLSearchParams(location.search);
     var w = K.work(qs.get('id') || 'charge') || K.work('charge'), c = K.creatorOf(w);
-    document.title = w.title + ' — KIVELO 시안 2';
+    document.title = w.title + ' — KIVELO';
     $('#bkBg').src = w.wide; $('#bkPoster').src = w.poster;
     $('#bkNow').innerHTML = '<i></i>NOW SHOWING · ' + (w.free ? '무료 상영' : '패스 전용');
     $('#bkT').textContent = w.title; $('#bkEn').textContent = w.en; $('#bkLog').textContent = w.logline;

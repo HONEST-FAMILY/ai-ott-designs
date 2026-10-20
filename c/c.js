@@ -295,7 +295,7 @@
   if ($('#wp')) {
     var qs = new URLSearchParams(location.search);
     var w = K.work(qs.get('id') || 'singularity') || K.work('singularity'), c = K.creatorOf(w);
-    document.title = w.title + ' — KIVELO 시안 3';
+    document.title = w.title + ' — KIVELO';
     var wp = $('#wp'), wv = $('#wv'), mon = w.montage;
     wv.src = mon ? mon.src : w.prev; if (!mon) wv.loop = true;
     $('#wpPoster').src = mon ? mon.poster : w.wide;

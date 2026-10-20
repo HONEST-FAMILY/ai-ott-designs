@@ -877,7 +877,7 @@
     var qs = new URLSearchParams(location.search);
     var w = K.work(qs.get('id') || 'spring') || K.work('spring'), c = K.creatorOf(w);
     var ep = +(qs.get('ep') || 0);
-    document.title = w.title + ' 재생 — KIVELO 시안 1';
+    document.title = w.title + ' 재생 — KIVELO';
     var wp = $('#wp'), vid = $('#wv'), mon = w.montage;
     vid.src = mon ? mon.src : w.prev;
     if (!mon) vid.loop = true;
