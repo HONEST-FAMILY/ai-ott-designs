@@ -152,7 +152,7 @@
         });
       });
       pulse();
-      setTimeout(function () { var a = $('#answer'); var y = a.getBoundingClientRect().top + window.scrollY - 90; window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' }); }, 350);
+      setTimeout(function () { var a = $('#answer'); var y = a.getBoundingClientRect().top + window.scrollY - 90; window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' }); }, 900);
     };
     $('#ask').addEventListener('submit', function (e) { e.preventDefault(); if (!q.value.trim()) q.value = q.getAttribute('placeholder') || sugg[0]; ask(q.value.trim()); });
     $$('#sugg .chip').forEach(function (b) { b.addEventListener('click', function () { q.value = b.textContent; ask(b.textContent); }); });

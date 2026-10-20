@@ -298,6 +298,7 @@ img, video { display: block; max-width: 100%; }
 }
 @media (max-width: 760px) {
   body { font-size: 15px; }
+  .glass { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(16, 20, 28, .94); }
   .nav { height: 58px; gap: 10px; }
   .nav nav, .nav-r .login, .sub-btn { display: none; }
   .stage { padding-top: 84px; min-height: 92vh; }

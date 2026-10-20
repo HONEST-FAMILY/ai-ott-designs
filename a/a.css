@@ -365,6 +365,7 @@ img, video { display: block; max-width: 100%; }
 }
 @media (max-width: 760px) {
   body { font-size: 15px; }
+  .grain::after { animation: none; }
   .nav { height: 58px; gap: 12px; }
   .nav nav, .nav-r .login, .btn-sub { display: none; }
   .logo { font-size: 25px; }

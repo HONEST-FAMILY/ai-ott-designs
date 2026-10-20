@@ -62,7 +62,7 @@
   /* ---------- HOME ---------- */
   if ($('#heroMedia')) {
     var heroItems = [
-      { id: 'spring', v: M + 'hero/a1.mp4', p: M + 'hero/a1.jpg' },
+      { id: 'spring', v: M + 'hero/a1.mp4?v=2', p: M + 'hero/a1.jpg?v=2' },
       { id: 'sintel', v: M + 'hero/a2.mp4', p: M + 'hero/a2.jpg' },
       { id: 'charge', v: M + 'hero/a3.mp4', p: M + 'hero/a3.jpg' }
     ];

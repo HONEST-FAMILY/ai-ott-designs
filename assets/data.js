@@ -251,7 +251,7 @@ window.KV = (function () {
     { id: 'sh02', work: 'charge', at: '01:22', title: '경비 로봇과 정면승부', len: '0:10', src: M + 'shorts/sh02.mp4', poster: M + 'shorts/sh02.jpg' },
     { id: 'sh03', work: 'singularity', at: '00:57', title: '빛나는 해파리의 정체', len: '0:11', src: M + 'shorts/sh03.mp4', poster: M + 'shorts/sh03.jpg' },
     { id: 'sh04', work: 'sprite', at: '1화 02:52', title: '버섯들이 회의 중', len: '0:10', src: M + 'shorts/sh04.mp4', poster: M + 'shorts/sh04.jpg' },
-    { id: 'sh05', work: 'spring', at: '06:52', title: '산이 깨어나는 순간', len: '0:10', src: M + 'shorts/sh05.mp4', poster: M + 'shorts/sh05.jpg' },
+    { id: 'sh05', work: 'spring', at: '06:52', title: '산이 깨어나는 순간', len: '0:10', src: M + 'shorts/sh05.mp4?v=2', poster: M + 'shorts/sh05.jpg?v=2' },
     { id: 'sh06', work: 'wingit', at: '01:10', title: '고양이의 비명', len: '0:08', src: M + 'shorts/sh06.mp4', poster: M + 'shorts/sh06.jpg' },
     { id: 'sh07', work: 'hero', at: '01:19', title: '붉은 비행기, 구름을 가르다', len: '0:10', src: M + 'shorts/sh07.mp4', poster: M + 'shorts/sh07.jpg' },
     { id: 'sh08', work: 'singularity', at: '02:12', title: '우주에서 처음 눈 뜬 생명', len: '0:10', src: M + 'shorts/sh08.mp4', poster: M + 'shorts/sh08.jpg' },
