@@ -65,13 +65,49 @@
 
   /* HOME */
   if ($('#stage')) {
-    var stage = $('#stage'), orb = $('#orb'), q = $('#q');
+    var stage = $('#stage'), cloud = $('#cloud'), q = $('#q');
+    var spots = innerWidth <= 760
+      ? [[-38, -30, .7], [36, -34, .75], [-40, 6, .6], [40, 10, .65], [-30, 36, .7], [32, 38, .6], [0, -40, .55], [-6, 44, .5]]
+      : [[-40, -30, 1], [-26, -40, .7], [-44, 4, .85], [-30, 26, .75], [-42, 40, .6], [-16, 42, .55], [40, -32, .95], [26, -42, .65], [44, 0, .8], [30, 22, .9], [42, 40, .6], [16, 44, .55], [-12, -44, .5], [12, -38, .6], [-22, -14, .45], [24, -10, .45]];
+    var pool = [];
+    K.works.forEach(function (w) { w.scenes.slice(0, 2).forEach(function (s) { pool.push({ w: w, s: s }); }); });
+    cloud.innerHTML = spots.map(function (p, i) {
+      var x = pool[(i * 5) % pool.length];
+      return '<div class="st" data-w="' + x.w.id + '" style="--x:' + p[0] + ';--y:' + p[1] + ';--z:' + p[2] + ';--r:' + ((i * 37) % 13 - 6) + 'deg"><div class="st-in" style="animation-duration:' + (7 + (i % 5) * 1.3).toFixed(1) + 's;animation-delay:-' + (i * 0.9).toFixed(1) + 's"><img src="' + x.s.img + '" alt=""></div></div>';
+    }).join('');
     if (fine) document.addEventListener('mousemove', function (e) {
-      var x = (e.clientX / innerWidth - .5) * 24, y = (e.clientY / innerHeight - .5) * 24;
-      orb.style.setProperty('--mx', x.toFixed(1) + 'px'); orb.style.setProperty('--my', y.toFixed(1) + 'px');
+      cloud.style.setProperty('--mx', (e.clientX / innerWidth - .5).toFixed(3)); cloud.style.setProperty('--my', (e.clientY / innerHeight - .5).toFixed(3));
     });
-    var pulse = function () { orb.style.setProperty('--pulse', '1.07'); clearTimeout(pulse.t); pulse.t = setTimeout(function () { orb.style.setProperty('--pulse', '1'); }, 160); };
+    var pulse = function () {
+      var c0 = q.value.trim() ? parse(q.value) : [];
+      var txt = q.value.trim().toLowerCase();
+      cloud.classList.toggle('lit', !!(c0.length || txt));
+      $$('.st', cloud).forEach(function (st) {
+        var w = K.work(st.dataset.w);
+        var hit = c0.length ? c0.some(function (x) { return hitOf(w, x); }) : !!txt && (w.title + ' ' + w.tags.join(' ') + ' ' + w.tools.join(' ')).toLowerCase().indexOf(txt) >= 0;
+        st.classList.toggle('hit', hit);
+      });
+    };
     q.addEventListener('input', pulse);
+    var fly = function (ranked) {
+      if (reduce) return;
+      $$('#picks .pick').forEach(function (p, i) {
+        var r = ranked[i], from = r && $('.st[data-w="' + r.w.id + '"] img', cloud);
+        var to = $('.pick-pic', p);
+        if (!from || !to) return;
+        p.classList.add('flying');
+        var a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+        var cl = document.createElement('img'); cl.className = 'fly'; cl.src = r.w.wide;
+        cl.style.left = (a.left + scrollX) + 'px'; cl.style.top = (a.top + scrollY) + 'px'; cl.style.width = a.width + 'px'; cl.style.height = a.height + 'px';
+        document.body.appendChild(cl);
+        void cl.offsetWidth;
+        setTimeout(function () {
+          cl.style.transition = 'left .85s cubic-bezier(.65,0,.2,1), top .85s cubic-bezier(.65,0,.2,1), width .85s cubic-bezier(.65,0,.2,1), height .85s cubic-bezier(.65,0,.2,1), border-radius .85s';
+          cl.style.left = (b.left + scrollX) + 'px'; cl.style.top = (b.top + scrollY) + 'px'; cl.style.width = b.width + 'px'; cl.style.height = b.height + 'px'; cl.style.borderRadius = '20px 20px 0 0';
+        }, i * 120);
+        setTimeout(function () { p.classList.remove('flying'); p.classList.add('in'); setTimeout(function () { cl.remove(); }, 260); }, 900 + i * 120);
+      });
+    };
     var examples = ['잠들기 전에 볼 잔잔한 애니메이션', '실사 같은 SF 단편', '5분 안에 끝나는 웃긴 거', 'Runway로 만든 작품', '아이랑 같이 볼 판타지'];
     var ei = 0, ci = 0, del = false;
     (function tick() {
@@ -130,10 +166,11 @@
         var w = r.w, pct = Math.min(98, Math.round(c.length ? 58 + 40 * r.hits.length / c.length : 72) - ranked.indexOf(r) * 3);
         var why = r.hits.map(function (x) { return x.label; });
         why.push(w.runtime); why.push(toolsText(w));
-        return '<div class="pick glass"><a class="pick-pic" href="work.html?id=' + w.id + '"><img src="' + w.wide + '" alt=""><video muted playsinline loop preload="none" data-src="' + w.prev + '"></video><span class="m"><i class="ring" style="--p:' + pct + '"></i>취향 ' + pct + '%</span></a>' +
+        return '<div class="pick glass"><a class="pick-pic" href="work.html?id=' + w.id + '"><img src="' + w.wide + '" alt=""><video muted playsinline loop preload="none" data-src="' + w.prev + '"></video><span class="m"><b>' + pct + '%</b> 취향에 맞음</span></a>' +
           '<div class="pick-b"><div class="pick-t">' + esc(w.title) + '<small>' + esc(w.en) + '</small></div><div class="why">' + why.map(function (x) { return '<span>' + esc(x) + '</span>'; }).join('') + '</div>' +
           '<p>' + esc(w.logline) + '</p><a class="btn w" href="work.html?id=' + w.id + '">' + I.play + '바로 보기</a></div></div>';
       }).join('');
+      fly(ranked);
       $$('#picks .pick').forEach(function (p, i) {
         setTimeout(function () { p.classList.add('in'); }, 200 + i * 160);
         var v = $('video', p);
@@ -166,14 +203,82 @@
         var d = Math.sqrt((Math.pow(a - t0, 2) + Math.pow(b - t1, 2) + Math.pow(c - t2, 2)) / 3);
         return { w: w, m: Math.round((1 - d) * 100), a: a, b: b, c: c };
       }).sort(function (x, y) { return y.m - x.m; }).slice(0, 4);
-      $('#dialRes').innerHTML = ranked.map(function (r) {
+      var res = $('#dialRes'), cur = $$('.dr', res), sameOrder = cur.length === ranked.length && cur.every(function (e, i) { return e.dataset.id === ranked[i].w.id; });
+      if (sameOrder) {
+        cur.forEach(function (e, i) { $('.score b', e).textContent = ranked[i].m + '%'; });
+        return;
+      }
+      var before = {};
+      cur.forEach(function (e) { before[e.dataset.id] = e.getBoundingClientRect(); });
+      res.innerHTML = ranked.map(function (r) {
         var w = r.w;
-        return '<a class="dr glass" href="work.html?id=' + w.id + '"><img src="' + w.poster + '" alt=""><div><div class="score"><i class="ring" style="--p:' + r.m + '"></i>지금 기분과 ' + r.m + '%</div><b>' + esc(w.title) + '</b><div class="meta">' + esc(w.genre) + ' · ' + esc(w.runtime) + '</div>' +
+        return '<a class="dr glass" data-id="' + w.id + '" href="work.html?id=' + w.id + '"><img src="' + w.poster + '" alt=""><div><div class="score">지금 기분과 <b>' + r.m + '%</b></div><b>' + esc(w.title) + '</b><div class="meta">' + esc(w.genre) + ' · ' + esc(w.runtime) + '</div>' +
           '<div class="bars"><div class="bar">분위기<i style="--w:' + Math.round(r.a * 100) + '%"></i></div><div class="bar">길이<i style="--w:' + Math.round(r.b * 100) + '%"></i></div><div class="bar">실사감<i style="--w:' + Math.round(r.c * 100) + '%"></i></div></div></div></a>';
       }).join('');
+      if (reduce) return;
+      $$('.dr', res).forEach(function (e, i) {
+        var b = before[e.dataset.id], a = e.getBoundingClientRect();
+        e.style.transition = 'none';
+        if (b) e.style.transform = 'translate(' + (b.left - a.left) + 'px,' + (b.top - a.top) + 'px)';
+        else { e.style.transform = 'translateY(26px) scale(.92)'; e.style.opacity = '0'; }
+        void e.offsetWidth;
+        e.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1) ' + (b ? 0 : i * 0.05) + 's, opacity .45s ' + (b ? 0 : i * 0.05) + 's';
+        e.style.transform = ''; e.style.opacity = '';
+      });
     };
     ['#k0', '#k1', '#k2'].forEach(function (s) { $(s).addEventListener('input', renderDial); });
     renderDial();
+
+    var ARC = 2 * Math.PI * 46 * 0.75;
+    $$('.knob').forEach(function (kn) {
+      var inp = $('input[type=range]', kn);
+      var ticks = '';
+      for (var i = 0; i <= 10; i++) { var ang = (-135 + i * 27) * Math.PI / 180, r1 = 56, r2 = i % 5 ? 52 : 49; ticks += '<line x1="' + (60 + Math.sin(ang) * r1).toFixed(1) + '" y1="' + (60 - Math.cos(ang) * r1).toFixed(1) + '" x2="' + (60 + Math.sin(ang) * r2).toFixed(1) + '" y2="' + (60 - Math.cos(ang) * r2).toFixed(1) + '"/>'; }
+      var rk = document.createElement('div'); rk.className = 'rk';
+      rk.innerHTML = '<svg viewBox="0 0 120 120" aria-hidden="true"><g class="tk">' + ticks + '</g><circle class="trk" cx="60" cy="60" r="46" transform="rotate(135 60 60)" stroke-dasharray="' + ARC.toFixed(2) + ' 400"/><circle class="val" cx="60" cy="60" r="46" transform="rotate(135 60 60)"/></svg><div class="cap"><i></i></div>';
+      kn.insertBefore(rk, kn.firstChild);
+      var val = $('.val', rk), cap = $('.cap', rk);
+      var paint = function () { var v = +inp.value; val.setAttribute('stroke-dasharray', (ARC * v / 100).toFixed(2) + ' 400'); cap.style.transform = 'rotate(' + (-135 + v * 2.7).toFixed(1) + 'deg)'; };
+      inp.addEventListener('input', paint); paint();
+      var drag = false;
+      var setFrom = function (e) {
+        var r = rk.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+        var deg = Math.atan2(dx, -dy) * 180 / Math.PI;
+        if (deg < -135) deg = deg < -157 ? 135 : -135; if (deg > 135) deg = 135;
+        var v = Math.round((deg + 135) / 270 * 100);
+        if (+inp.value !== v) { inp.value = v; inp.dispatchEvent(new Event('input', { bubbles: true })); }
+      };
+      rk.addEventListener('pointerdown', function (e) { drag = true; rk.setPointerCapture(e.pointerId); rk.classList.add('drag'); setFrom(e); e.preventDefault(); });
+      rk.addEventListener('pointermove', function (e) { if (drag) setFrom(e); });
+      rk.addEventListener('pointerup', function () { drag = false; rk.classList.remove('drag'); });
+      rk.addEventListener('wheel', function (e) { e.preventDefault(); inp.value = Math.max(0, Math.min(100, +inp.value + (e.deltaY < 0 ? 4 : -4))); inp.dispatchEvent(new Event('input', { bubbles: true })); }, { passive: false });
+    });
+
+    var mock = $('.form-mock');
+    if (mock && !reduce) {
+      $$('.seg', mock).forEach(function (sg) {
+        var pill = document.createElement('i'); pill.className = 'pill'; sg.appendChild(pill);
+        var place = function () { var on = $('b.on', sg); if (!on) return; pill.style.left = on.offsetLeft + 'px'; pill.style.width = on.offsetWidth + 'px'; };
+        sg._place = place; place();
+        $$('b', sg).forEach(function (b) { b.addEventListener('click', function () { $$('b', sg).forEach(function (x) { x.classList.toggle('on', x === b); }); place(); }); });
+      });
+      var hand = document.createElement('span'); hand.className = 'hand'; hand.innerHTML = '<svg viewBox="0 0 24 24" fill="#fff" stroke="#06080c" stroke-width="1.2"><path d="M6 3l12 9-5.2 1 3 6.2-2.6 1.2-3-6.2L6 18z"/></svg>'; mock.appendChild(hand);
+      var paused = false; mock.addEventListener('mouseenter', function () { paused = true; hand.style.opacity = 0; }); mock.addEventListener('mouseleave', function () { paused = false; });
+      var step = 0;
+      setInterval(function () {
+        if (paused || mock.getBoundingClientRect().top > innerHeight) return;
+        var segs = $$('.seg', mock), sg = segs[step % segs.length], opts = $$('b', sg), on = opts.indexOf($('b.on', sg)), nx = opts[(on + 1 + (step % 2)) % opts.length];
+        var mr = mock.getBoundingClientRect(), br = nx.getBoundingClientRect();
+        hand.style.opacity = 1; hand.style.transform = 'translate(' + (br.left - mr.left + br.width / 2) + 'px,' + (br.top - mr.top + br.height / 2) + 'px)';
+        setTimeout(function () { hand.classList.add('tap'); opts.forEach(function (x) { x.classList.toggle('on', x === nx); }); sg._place(); setTimeout(function () { hand.classList.remove('tap'); }, 180); }, 620);
+        step++;
+      }, 1500);
+    }
+
+    if (!reduce && 'IntersectionObserver' in window) {
+      var rv = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); rv.unobserve(e.target); } }); }, { threshold: 0.25 });
+      $$('.sec-h, .lst, .plan, .cta').forEach(function (e2, i) { e2.classList.add('rv'); e2.style.transitionDelay = (e2.classList.contains('lst') || e2.classList.contains('plan') ? (i % 3) * 0.1 : 0) + 's'; rv.observe(e2); });
+    }
 
     var tCount = {};
     K.works.forEach(function (w) { w.tools.forEach(function (t) { tCount[t] = (tCount[t] || 0) + 1; }); });

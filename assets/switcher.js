@@ -2,10 +2,11 @@
   var here = location.pathname;
   var root = here.replace(/\/(a|b|c|studio)\/[^\/]*$/, '/').replace(/\/[^\/]*$/, '/');
   var cur = (here.match(/\/(a|b|c|studio)\//) || [])[1] || '';
-  var names = { a: '1안 · AI 영상관', b: '2안 · 극장형', c: '3안 · AI 큐레이터', studio: '창작자 화면 · 공통' };
+  var names = { a: '1안 · 넷플릭스형', b: '2안 · 극장형', c: '3안 · AI 큐레이터', studio: '창작자 화면 · 공통' };
   var css = '' +
     '.kv-sw{position:fixed;z-index:9999;right:16px;bottom:16px;font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif;}' +
     '.kv-sw.left{right:auto;left:16px}' +
+    '.kv-sw.top{top:20px;bottom:auto;right:96px}.kv-sw.top .kv-sw-menu{top:50px;bottom:auto}' +
     '.kv-sw-btn{display:flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(18,18,18,.78);color:#fff;font-size:13px;font-weight:600;letter-spacing:-.01em;cursor:pointer;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 6px 24px rgba(0,0,0,.35)}' +
     '.kv-sw-btn i{width:8px;height:8px;border-radius:50%;background:#ffd84a;box-shadow:0 0 0 3px rgba(255,216,74,.18)}' +
     '.kv-sw-menu{position:absolute;right:0;bottom:50px;width:288px;padding:10px;border-radius:16px;background:rgba(20,20,20,.94);border:1px solid rgba(255,255,255,.14);color:#eee;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 18px 50px rgba(0,0,0,.5);display:none}' +
@@ -23,7 +24,7 @@
     '.kv-sw.mtop{top:68px;bottom:auto;right:12px;left:auto}.kv-sw.mtop .kv-sw-menu{top:44px;bottom:auto;right:0;left:auto}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var box = document.createElement('div');
-  box.className = 'kv-sw' + (document.body.hasAttribute('data-sw-left') ? ' left' : '') + (document.body.hasAttribute('data-sw-mtop') ? ' mtop' : '');
+  box.className = 'kv-sw' + (document.body.hasAttribute('data-sw-left') ? ' left' : '') + (document.body.hasAttribute('data-sw-mtop') ? ' mtop' : '') + (document.body.hasAttribute('data-sw-top') ? ' top' : '');
   var rows = ['a', 'b', 'c'].map(function (k) {
     return '<div class="kv-sw-row' + (k === cur ? ' on' : '') + '"><span>' + names[k] + '</span><nav>' +
       '<a href="' + root + k + '/index.html">홈</a><a href="' + root + k + '/work.html">작품</a><a href="' + root + k + '/shorts.html">쇼츠</a></nav></div>';

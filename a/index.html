@@ -4,155 +4,96 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>KIVELO — 시안 1 · AI 영상관</title>
+<title>KIVELO — 시안 1 · 넷플릭스형</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+KR:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="a.css">
 </head>
-<body class="grain">
+<body>
 <header class="nav" id="nav">
   <a class="logo" href="index.html" aria-label="KIVELO 홈">KIVEL<em>O</em><sup>AI CINEMA</sup></a>
   <nav aria-label="주 메뉴">
     <a class="on" href="index.html">홈</a>
-    <a href="#wall">시네마</a>
+    <a href="#row-trend">시네마</a>
     <a href="shorts.html">쇼츠</a>
-    <a href="#find">제작정보로 찾기</a>
-    <a href="#creators">창작자</a>
+    <a href="#row-scene">명장면</a>
+    <a href="#row-new">새로 올라온 작품</a>
+    <a href="#row-list">내가 찜한 작품</a>
   </nav>
   <div class="nav-r">
-    <a class="icon-btn" href="#find" aria-label="검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></a>
-    <a class="login" href="#">로그인</a>
-    <a class="btn-sub" href="#plans">구독하기</a>
+    <form class="srch" id="srch" role="search">
+      <button class="srch-btn" type="button" id="srchBtn" aria-label="검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+      <input id="srchIn" type="search" placeholder="제목, 창작자, 장르, 만든 도구" aria-label="검색어">
+      <button class="srch-x" type="button" id="srchX" aria-label="지우기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </form>
+    <a class="nr-link" href="../studio/index.html">창작자 스튜디오</a>
+    <div class="drop" id="bellDrop">
+      <button class="drop-btn bell" type="button" aria-label="알림" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><b id="bellN">3</b></button>
+      <div class="drop-menu" id="bellMenu" role="menu"></div>
+    </div>
+    <div class="drop" id="profDrop">
+      <button class="drop-btn" type="button" aria-label="내 계정" aria-haspopup="true"><span class="avatar"><img src="../assets/media/scene/coffee_1.jpg" alt=""></span><svg class="caret" viewBox="0 0 24 24" fill="currentColor"><path d="M6 9h12l-6 7z"/></svg></button>
+      <div class="drop-menu prof-menu" role="menu">
+        <div class="prof-plan"><b>무료로 보는 중</b>작품 시작 전에 광고가 한 번 나옵니다. 구독하면 광고 없이 바로 봅니다.<br><a href="#">구독 안내</a></div>
+        <a href="#row-list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v17l-6-4-6 4z"/></svg>내가 찜한 작품</a>
+        <a href="../studio/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h16M6 16l9-9 3 3-9 9H6z"/></svg>창작자 스튜디오</a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>계정</a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17.5v.5"/></svg>고객 센터</a>
+        <hr>
+        <a href="#" style="justify-content:center">키벨로에서 로그아웃</a>
+      </div>
+    </div>
   </div>
 </header>
+<div class="pills" id="pills"><a href="#row-trend">시네마</a><a href="shorts.html">쇼츠</a><a href="#row-scene">명장면</a></div>
 
-<section class="hero" aria-label="오늘의 상영">
+<section class="hero" id="hero" aria-label="오늘의 상영">
   <div class="hero-media" id="heroMedia"></div>
   <div class="hero-shade"></div>
   <div class="hero-label" id="heroLabel"></div>
   <ol class="hero-queue" id="heroQueue" aria-label="상영 순서"></ol>
 </section>
 
-<section class="continue" aria-label="이어서 보기">
-  <div class="cont-head"><b>이어서 보기</b><span>지난번에 보던 곳부터</span></div>
-  <div class="cont-row" id="contRow"></div>
-</section>
+<main class="browse" id="browse"></main>
+<section class="results" id="results" aria-live="polite"></section>
 
-<section class="sec" id="wall-sec">
-  <div class="sec-head">
-    <div>
-      <h2>이번 주 전시 <i>— Now on view</i></h2>
-      <p>작품을 줄 세우지 않고, 한 편씩 액자처럼 걸었습니다. 마우스를 올리면 그 작품이 움직입니다.</p>
-    </div>
-    <a class="more" href="#find">장면으로 찾기</a>
-  </div>
-  <div class="filters" id="wallFilters"></div>
-  <div class="wall" id="wall"></div>
-</section>
-
-<section class="sec" id="find">
-  <div class="sec-head">
-    <div>
-      <h2>제작정보로 찾기 <i>— by tool, by look</i></h2>
-      <p>어떤 AI로 만들었는지, 어떤 그림체인지로 장면을 찾습니다. 장면을 누르면 그 장면부터 재생됩니다.</p>
-    </div>
-  </div>
-  <form class="find-bar" id="findForm" role="search">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-    <input id="findInput" type="search" placeholder="예: Runway로 만든 구름, 실사 같은 SF, 손그림" aria-label="장면 검색">
-    <button type="submit">찾기</button>
-  </form>
-  <div class="find-chips" id="findChips"></div>
-  <p class="find-count" id="findCount"></p>
-  <div class="scenes" id="scenes"></div>
-</section>
-
-<section class="sec" id="shorts-sec">
-  <div class="sec-head">
-    <div>
-      <h2>쇼츠 <i>— a taste in seconds</i></h2>
-      <p>짧게 보고 마음에 들면 바로 본편으로. 모든 쇼츠에 본편이 이어져 있습니다.</p>
-    </div>
-    <a class="more" href="shorts.html">쇼츠 전체 보기</a>
-  </div>
-  <div class="rail" id="shortRail"></div>
-</section>
-
-<section class="sec" id="creators">
-  <div class="sec-head">
-    <div>
-      <h2>이번 달의 창작자</h2>
-      <p>키벨로에 작품을 건 사람들. 관심 창작자로 두면 새 작품이 나올 때 알려 드립니다.</p>
-    </div>
-  </div>
-  <div class="creators-grid" id="creatorsGrid"></div>
-</section>
-
-<section class="sec" id="plans">
-  <div class="sec-head">
-    <div>
-      <h2>보는 방법은 두 가지</h2>
-      <p>가입만 하면 광고와 함께 무료로, 구독하면 광고 없이 봅니다.</p>
-    </div>
-  </div>
-  <div class="plans">
-    <div class="plan">
-      <h3>무료로 보기</h3>
-      <p class="p-sub">회원가입만 하면 바로</p>
-      <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>무료 공개 작품과 모든 쇼츠</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>작품 시작 전 짧은 광고</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>관심 작품·이어보기</li>
-        <li class="no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h12"/></svg>구독 전용 작품</li>
-      </ul>
-      <a class="btn ghost" href="#">무료로 시작하기</a>
-    </div>
-    <div class="plan sub">
-      <h3>키벨로 구독</h3>
-      <p class="p-sub">매달 자동 결제 · 언제든 해지</p>
-      <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>광고 없이 모든 작품</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>구독 전용 작품과 새 작품 먼저 보기</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>고화질 재생</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg>창작자 응원 (구독료 일부가 창작자에게)</li>
-      </ul>
-      <a class="btn play" href="#">구독하기</a>
-    </div>
-  </div>
-</section>
-
-<section class="join" aria-label="창작자 모집">
-  <div>
-    <h2>당신의 AI 작품을<br>이 벽에 걸어 보세요</h2>
-    <p>영상을 올리고, 어떻게 만들었는지 체크만 하면 됩니다. 운영팀이 확인한 뒤 공개하고, 누가 얼마나 봤는지 매주 알려 드립니다.</p>
+<section class="strip" aria-label="창작자 모집">
+  <div class="strip-bg" id="stripBg" aria-hidden="true"></div>
+  <div class="strip-in">
+    <h2>만든 작품이 있다면,<br>키벨로에 올려 보세요</h2>
+    <p>영상을 올리고 공정마다 사람이 했는지 AI로 했는지 고르면 됩니다. 운영팀이 확인한 뒤 공개하고, 누가 얼마나 봤는지 매주 알려 드립니다.</p>
     <a class="btn play" href="../studio/index.html">창작자로 작품 올리기</a>
   </div>
-  <ol class="steps">
-    <li><div><b>영상 올리기</b><span>시네마는 가로, 쇼츠는 세로 영상 그대로</span></div></li>
-    <li><div><b>제작정보 체크</b><span>공정마다 사람·AI·함께 중 고르고 도구 이름만</span></div></li>
-    <li><div><b>검수 후 공개</b><span>권리 자료를 확인하고, 보완할 점은 메시지로</span></div></li>
-  </ol>
 </section>
 
 <footer class="foot">
-  <div>
-    <a class="logo" href="index.html">KIVEL<em>O</em></a>
-    <div>AI로 만든 영화·애니메이션·쇼츠를 모아 보는 곳</div>
+  <div class="foot-sns" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4 1.7-4 4.2V10H7v4h3v8h4v-8h3l1-4h-4V8.6c0-.4.2-.6.6-.6Z"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".8" fill="currentColor"/></svg>
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.6 2.6 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3Z"/></svg>
   </div>
-  <nav><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="#">창작자 센터</a><a href="#">고객센터</a></nav>
+  <nav class="foot-links">
+    <a href="#">자주 묻는 질문</a><a href="#">고객 센터</a><a href="#">구독 안내</a><a href="#">창작자 센터</a>
+    <a href="#">이용 약관</a><a href="#">개인정보 처리방침</a><a href="#">광고 문의</a><a href="#">권리 침해 신고</a>
+  </nav>
+  <a class="foot-code" href="#">문의하기</a>
+  <p class="corp">키벨로 · 고객센터 운영 시간 평일 10:00~18:00</p>
   <p class="note">시안용 화면입니다. 작품 제목·창작자·제작정보·숫자는 화면 구성을 보여주기 위한 가상의 예시입니다. 영상과 이미지는 Blender Foundation의 오픈 무비(CC BY 3.0·4.0) 장면을 잘라 썼습니다 — Spring, Charge, Singularity, Sprite Fright, Coffee Run, Hero, Wing It!, Glass Half, Sintel · © Blender Foundation | studio.blender.org</p>
 </footer>
 
 <nav class="tabbar" aria-label="하단 메뉴">
   <a class="on" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg>홈</a>
-  <a href="#find"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>찾기</a>
   <a href="shorts.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="m11 10 3 2-3 2z" fill="currentColor"/></svg>쇼츠</a>
-  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4h12v17l-6-4-6 4z"/></svg>보관함</a>
-  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>내 정보</a>
+  <a href="#row-new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg>새로 올라온</a>
+  <a href="#row-list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>내 키벨로</a>
 </nav>
 
-<div class="cursor" id="cursor" aria-hidden="true">보기</div>
+<div class="pv" id="pv" aria-hidden="true"></div>
+<div class="mo" id="mo" role="dialog" aria-modal="true" aria-label="작품 상세"></div>
+<div class="sheet" id="sheet" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="wipe" id="wipe"></div>
 <script src="../assets/data.js"></script>
 <script src="a.js"></script>
 <script src="../assets/switcher.js"></script>

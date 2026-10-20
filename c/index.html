@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="c.css">
+<link rel="stylesheet" href="fx.css">
 </head>
 <body>
 <header class="nav" id="nav">
@@ -26,7 +27,7 @@
 </header>
 
 <section class="stage" id="stage">
-  <div class="orb-wrap"><div class="orb" id="orb"><i></i></div></div>
+  <div class="cloud" id="cloud" aria-hidden="true"></div>
   <h1 class="greet" id="greet">오늘은 어떤 이야기가<br><span>보고 싶으세요?</span></h1>
   <form class="ask glass" id="ask" role="search">
     <input id="q" type="text" autocomplete="off" aria-label="보고 싶은 작품을 말해 주세요">
@@ -43,9 +44,9 @@
 
 <section class="sec" id="dial">
   <div class="sec-h">
-    <span class="mono">Taste dial</span>
+    <span class="mono">취향으로 찾기</span>
     <h2>말로 하기 어려우면,<br>다이얼을 돌려 보세요</h2>
-    <p>분위기·길이·그림체를 움직이면 지금 기분에 가까운 작품부터 다시 줄을 섭니다.</p>
+    <p>다이얼을 손으로 돌리면 지금 기분에 가까운 작품부터 다시 줄을 섭니다. 마우스 휠로도 돌아갑니다.</p>
   </div>
   <div class="dial">
     <div class="knobs glass">
@@ -59,7 +60,7 @@
 
 <section class="sec" id="map">
   <div class="sec-h">
-    <span class="mono">Production map</span>
+    <span class="mono">만든 도구로 찾기</span>
     <h2>어떤 AI로 만들었는지로<br>작품을 찾습니다</h2>
     <p>왼쪽 도구에 마우스를 올리면 그 도구로 만든 작품이, 작품에 올리면 쓴 도구가 이어집니다.</p>
   </div>
@@ -72,7 +73,7 @@
 
 <section class="sec" id="lists">
   <div class="sec-h">
-    <span class="mono">Curated</span>
+    <span class="mono">큐레이터가 묶은 목록</span>
     <h2>오늘의 큐레이션</h2>
     <p>큐레이터가 한 줄 메모와 함께 묶었습니다.</p>
   </div>
@@ -80,7 +81,7 @@
 </section>
 
 <section class="sec" id="plans">
-  <div class="sec-h"><span class="mono">Plans</span><h2>보는 방법</h2></div>
+  <div class="sec-h"><span class="mono">구독</span><h2>보는 방법</h2></div>
   <div class="plans">
     <div class="plan glass"><h3>무료</h3><p class="s">회원가입만 하면</p><ul><li>무료 공개 작품과 모든 쇼츠</li><li>작품 시작 전 짧은 광고</li><li>큐레이터 추천·관심 작품</li><li class="no">구독 전용 작품</li></ul><a class="btn g" href="#">무료로 시작</a></div>
     <div class="plan glass sub"><h3>키벨로 구독</h3><p class="s">매달 자동 결제 · 언제든 해지</p><ul><li>광고 없이 모든 작품</li><li>구독 전용 작품과 새 작품 먼저 보기</li><li>내 취향을 기억하는 큐레이터</li><li>고화질 재생</li></ul><a class="btn w" href="#">구독하기</a></div>
@@ -89,7 +90,7 @@
 
 <section class="cta glass" aria-label="창작자 등록">
   <div>
-    <span class="mono">For creators</span>
+    <span class="mono">창작자</span>
     <h2>체크 몇 번으로<br>작품의 제작정보를 남기세요</h2>
     <p>공정마다 사람·AI·함께 중 하나만 고르면, 큐레이터가 그 정보로 작품을 알맞은 시청자에게 소개합니다.</p>
     <a class="btn w" href="../studio/index.html">창작자로 작품 올리기</a>

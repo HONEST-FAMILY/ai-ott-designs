@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>재생 — KIVELO 시안 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+KR:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="a.css">
+<link rel="stylesheet" href="play.css">
+</head>
+<body class="wbody" data-sw-top>
+<div class="wp" id="wp">
+  <video id="wv" playsinline preload="auto"></video>
+
+  <div class="wp-ad" id="wpAd">
+    <div class="ad-top"><span class="ad-tag">광고</span><span id="adT">0:05</span></div>
+    <div class="ad-mid"><b>여기에 광고가 나옵니다</b><span>무료로 볼 때는 작품 시작 전에 짧은 광고가 한 편 나옵니다. 광고 상품과 길이는 운영 정책에 맞춰 정합니다.</span></div>
+    <a class="ad-sub" href="index.html">구독하면 광고 없이 바로 봅니다 ›</a>
+    <button class="ad-skip" id="adSkip" type="button" disabled><svg class="ring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15"/><circle class="p" cx="18" cy="18" r="15"/></svg><span id="adSkipT">3초 뒤 건너뛰기</span></button>
+  </div>
+
+  <div class="wp-flash" id="wpFlash"></div>
+
+  <div class="wp-top">
+    <a class="wp-back" href="index.html" id="wpBack" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></a>
+    <span class="sp"></span>
+    <button class="wp-ic" type="button" aria-label="문제 신고"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></button>
+  </div>
+
+  <div class="wp-x" id="wpX" aria-live="polite"></div>
+
+  <div class="wp-bottom">
+    <div class="wp-bar" id="wpBar">
+      <div class="wp-rail"><i class="wp-fill" id="wpFill"></i><i class="wp-hov" id="wpHov"></i></div>
+      <span class="wp-knob" id="wpKnob"></span>
+      <div class="wp-tip" id="wpTip"><img alt=""><b></b><span></span></div>
+    </div>
+    <div class="wp-row">
+      <button class="wp-ic" type="button" id="wpPP" aria-label="재생/일시정지"></button>
+      <button class="wp-ic" type="button" id="wpBk" aria-label="10초 뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/><text x="12" y="15.5" font-size="7" font-weight="800" text-anchor="middle" fill="currentColor" stroke="none" font-family="Pretendard Variable, sans-serif">10</text></svg></button>
+      <button class="wp-ic" type="button" id="wpFw" aria-label="10초 앞으로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4h-4"/><text x="12" y="15.5" font-size="7" font-weight="800" text-anchor="middle" fill="currentColor" stroke="none" font-family="Pretendard Variable, sans-serif">10</text></svg></button>
+      <button class="wp-ic" type="button" id="wpVol" aria-label="소리"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wv" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="wx" d="M17 9.5l5 5M22 9.5l-5 5"/></svg></button>
+      <div class="wp-ttl"><b id="wpTitle"></b><span id="wpScene"></span></div>
+      <span class="wp-time" id="wpTime"></span>
+      <button class="wp-ic tg on" type="button" id="wpXTog" aria-label="장면 정보"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15h5M7 11h10"/></svg><span class="t">장면 정보</span></button>
+      <button class="wp-ic" type="button" id="wpEps" hidden aria-label="회차"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="8" width="14" height="12" rx="1.5"/><path d="M7 5h13v11"/></svg></button>
+      <button class="wp-ic" type="button" id="wpNextBtn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 5v14l10-7zM17 5h2.5v14H17z"/></svg></button>
+      <button class="wp-ic" type="button" id="wpSpd" aria-label="재생 속도">1x</button>
+      <button class="wp-ic" type="button" id="wpFs" aria-label="전체 화면"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+  </div>
+  <div class="eps-panel" id="wpEpsPanel"></div>
+  <div class="wp-next" id="wpNext"></div>
+</div>
+<div class="wipe" id="wipe"></div>
+<script src="../assets/data.js"></script>
+<script src="a.js"></script>
+<script src="../assets/switcher.js"></script>
+</body>
+</html>
